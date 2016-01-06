@@ -9,6 +9,6 @@ public class MainClass {
     public static void main(String[] args) {
         Cart cart = new Cart("./data/data1.json");
 
-        System.out.println(cart.count());
+        cart.printAll();
     }
 }
