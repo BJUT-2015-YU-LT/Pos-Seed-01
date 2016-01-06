@@ -11,6 +11,7 @@ public class Item {
     private float price;
 
     public String getBarcode() {
+
         return this.barcode;
     }
 

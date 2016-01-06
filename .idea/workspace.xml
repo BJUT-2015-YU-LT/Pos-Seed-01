@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e47d87f-f927-4680-91a3-6ebf2fc60a26" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/pos/main/Cart.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/pos/main/Item.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Pos-Seed-01/com/pos/main/MainClass.class" afterPath="$PROJECT_DIR$/out/production/Pos-Seed-01/com/pos/main/MainClass.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/test/Pos-Seed-01/com/pos/main/MainClassTest.class" afterPath="$PROJECT_DIR$/out/test/Pos-Seed-01/com/pos/main/MainClassTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/pos/main/MainClass.java" afterPath="$PROJECT_DIR$/src/com/pos/main/MainClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/com/pos/main/MainClassTest.java" afterPath="$PROJECT_DIR$/tests/com/pos/main/MainClassTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/pos/main/Item.java" afterPath="$PROJECT_DIR$/src/com/pos/main/Item.java" />
     </list>
     <ignored path="Pos-Seed-01.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,22 +40,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cart.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Cart.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/pos/main/Cart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23394495">
+            <state vertical-scroll-proportion="0.0">
               <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Item.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Item.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/pos/main/Item.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-              <folding />
+            <state vertical-scroll-proportion="0.70183486">
+              <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+              <folding>
+                <element signature="e#296#297#0" expanded="true" />
+                <element signature="e#328#329#0" expanded="true" />
+                <element signature="e#359#360#0" expanded="true" />
+                <element signature="e#391#392#0" expanded="true" />
+                <element signature="e#422#423#0" expanded="true" />
+                <element signature="e#455#456#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,8 +122,8 @@
         <option value="$PROJECT_DIR$/tests/com/pos/main/MainClassTest.java" />
         <option value="$PROJECT_DIR$/src/com/pos/item/Cart.java" />
         <option value="$PROJECT_DIR$/src/com/pos/item/Item.java" />
-        <option value="$PROJECT_DIR$/src/com/pos/main/Item.java" />
         <option value="$PROJECT_DIR$/src/com/pos/main/Cart.java" />
+        <option value="$PROJECT_DIR$/src/com/pos/main/Item.java" />
       </list>
     </option>
   </component>
@@ -706,7 +707,7 @@
       <option name="number" value="Default" />
       <updated>1451977884537</updated>
       <workItem from="1451977887418" duration="432000" />
-      <workItem from="1451978849734" duration="10176000" />
+      <workItem from="1451978849734" duration="10434000" />
     </task>
     <servers />
   </component>
@@ -743,7 +744,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10608000" />
+    <option name="totallyTimeSpent" value="10866000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1276" height="774" extended-state="6" />
@@ -786,7 +787,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -844,20 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RequirementStory.md">
-      <provider selected="true" editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="3.5581396">
-            <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://MODULES/mdl-Pos-Seed-01">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -898,19 +887,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UML/UML.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UML/UML.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.68">
@@ -940,19 +916,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pos/main/Item.java">
+    <entry file="file://$PROJECT_DIR$/src/com/pos/main/Cart.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pos/main/Cart.java">
+    <entry file="file://$PROJECT_DIR$/src/com/pos/main/Item.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23394495">
-          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
-          <folding />
+        <state vertical-scroll-proportion="0.70183486">
+          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <folding>
+            <element signature="e#296#297#0" expanded="true" />
+            <element signature="e#328#329#0" expanded="true" />
+            <element signature="e#359#360#0" expanded="true" />
+            <element signature="e#391#392#0" expanded="true" />
+            <element signature="e#422#423#0" expanded="true" />
+            <element signature="e#455#456#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
