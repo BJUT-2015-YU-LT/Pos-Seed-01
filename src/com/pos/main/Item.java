@@ -1,5 +1,7 @@
 package com.pos.main;
 
+import java.util.DoubleSummaryStatistics;
+
 /**
  * Created by pengzhendong on 16/1/6.
  */
@@ -8,7 +10,7 @@ public class Item {
     private String barcode;
     private String name;
     private String unit;
-    private float price;
+    private Double price;
 
     public String getBarcode() {
 
@@ -23,8 +25,25 @@ public class Item {
         return this.unit;
     }
 
-    public float getPrice() {
+    public Double getPrice() {
         return this.price;
     }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
 
 }

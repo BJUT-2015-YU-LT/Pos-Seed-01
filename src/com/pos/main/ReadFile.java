@@ -1,16 +1,13 @@
 package com.pos.main;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by pengzhendong on 16/1/6.
  */
 public class ReadFile {
 
-    public String ReadFile(String path) throws IOException {
+    public static String ReadFile(String path) throws IOException {
 
         File file = new File(path);
 
@@ -18,15 +15,19 @@ public class ReadFile {
             throw new FileNotFoundException();
         }
 
-        FileInputStream fis = new FileInputStream(file);
-        byte[] buf = new byte[1];
         StringBuffer sb = new StringBuffer();
-
-        while((fis.read(buf)) != -1) {
-            sb.append(new String(buf));
-            buf=new byte[1];
+        try {
+            InputStreamReader read = new InputStreamReader(new FileInputStream(file),"UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt = null;
+            while ((lineTxt = bufferedReader.readLine()) != null) {
+                sb.append(lineTxt);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return sb.toString();
     }
+
 }
