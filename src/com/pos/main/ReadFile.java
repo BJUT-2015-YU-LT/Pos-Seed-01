@@ -7,6 +7,13 @@ import java.io.*;
  */
 public class ReadFile {
 
+    /**
+     *
+     *
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public static String ReadFile(String path) throws IOException {
 
         File file = new File(path);
