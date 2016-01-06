@@ -17,11 +17,20 @@ public class Cart {
     private String path;
     private Double count;
 
+    /**
+     *
+     *
+     * @param path
+     */
     public Cart(String path) {
         this.path = path;
         this.count = 0.0;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean dealJson() {
         String result = "";
         try {
@@ -46,6 +55,11 @@ public class Cart {
         return true;
     }
 
+    /**
+     *
+     *
+     * @return
+     */
     public Double count() {
         this.dealJson();
 
