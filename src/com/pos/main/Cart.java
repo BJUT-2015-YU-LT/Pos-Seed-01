@@ -1,9 +1,7 @@
 package com.pos.main;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
-import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
