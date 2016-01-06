@@ -19,4 +19,9 @@ public class CartTest {
     public void testDealJson() throws Exception {
 
     }
+
+    @Test
+    public void testCount() throws Exception {
+
+    }
 }

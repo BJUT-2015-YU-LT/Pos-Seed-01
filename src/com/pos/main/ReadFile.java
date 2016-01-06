@@ -8,8 +8,7 @@ import java.io.*;
 public class ReadFile {
 
     /**
-     *
-     *
+     * 读取文件,返回文件内容
      * @param path
      * @return
      * @throws IOException

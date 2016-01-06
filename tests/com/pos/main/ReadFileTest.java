@@ -19,6 +19,10 @@ public class ReadFileTest {
         path = "./data/data0.json";
     }
 
+    /**
+     * 测试读取的内容是否正确
+     * @throws Exception
+     */
     @Test
     public void testReadFile() throws Exception {
         String result = readFile.ReadFile(path);

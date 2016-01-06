@@ -18,8 +18,7 @@ public class Cart {
     private Double count;
 
     /**
-     *
-     *
+     * 构造函数
      * @param path
      */
     public Cart(String path) {
@@ -28,7 +27,7 @@ public class Cart {
     }
 
     /**
-     *
+     * 将 Json 解析成对象,存到 list 中
      * @return
      */
     public boolean dealJson() {
@@ -56,8 +55,7 @@ public class Cart {
     }
 
     /**
-     *
-     *
+     * 计算总价
      * @return
      */
     public Double count() {
