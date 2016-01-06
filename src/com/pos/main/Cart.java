@@ -14,18 +14,24 @@ import java.util.List;
 public class Cart {
 
     private static List<Item> itemList = new ArrayList<Item>();
-    private float count;
+    private String path;
+    private Double count;
 
-    public static void dealJson(String path) {
+    public Cart(String path) {
+        this.path = path;
+        this.count = 0.0;
+    }
+
+    public boolean dealJson() {
         String result = "";
         try {
-            result = ReadFile.ReadFile(path);
+            result = ReadFile.ReadFile(this.path);
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
         JSONArray items = JSONArray.fromObject(result);
-
 
         for (int i = 0; i < items.size(); i++) {
             Item item = new Item();
@@ -37,12 +43,16 @@ public class Cart {
 
             itemList.add(item);
         }
+        return true;
+    }
+
+    public Double count() {
+        this.dealJson();
 
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
-            System.out.println("name: " + item.getName() + " unit: "
-                    + item.getUnit() + " price: " + item.getPrice());
+            this.count += item.getPrice();
         }
-
+        return count;
     }
 }

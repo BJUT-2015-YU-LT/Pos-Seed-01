@@ -1,7 +1,5 @@
 package com.pos.main;
 
-import java.util.DoubleSummaryStatistics;
-
 /**
  * Created by pengzhendong on 16/1/6.
  */
