@@ -16,7 +16,7 @@ public class ReadFileTest {
     @Before
     public void setUp() throws Exception {
         readFile = new ReadFile();
-        path = "./data/data1.json";
+        path = "./data/data0.json";
     }
 
     @Test
