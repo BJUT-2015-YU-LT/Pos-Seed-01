@@ -7,6 +7,4 @@ public class Cart {
 
     private int num;
     private float count;
-    private ;
-    
 }
