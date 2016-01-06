@@ -1,7 +1,5 @@
 package com.pos.main;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 /**
@@ -9,17 +7,17 @@ import static org.junit.Assert.*;
  */
 public class MainClassTest {
 
-    private MainClass mainClass;
+    private MainClass main;
 
     @org.junit.Before
     public void setUp() throws Exception {
-        mainClass = new MainClass();
+        main = new MainClass();
     }
 
     @org.junit.Test
-    public void testMain() throws Exception {
+    public void testMainClass() throws Exception {
 
-        assertEquals("helloworld", mainClass.sayHello());
+        assertEquals("helloworld", main.sayHello());
     }
 
 }
