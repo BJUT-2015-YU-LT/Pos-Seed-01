@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 新建一个项目 -->
-<project name="AntJunit" default="compiletest" basedir=".">
+<project name="AntJunit" default="all" basedir=".">
 
     <!-- 包含源代码的文件夹 -->
     <property name="src.dir" value="src" />
 
     <!-- 单元测试源代码的文件夹 -->
     <property name="test.dir" value="test" />
-
 
     <!-- 单元测试引入 Junit 的 jar 文件夹 -->
     <property name="junit.dir" value="/Applications/IntelliJ IDEA 15.app/Contents/lib" />
@@ -19,7 +18,7 @@
 
     <!-- 引入 Json 的 jar 的文件夹 -->
     <property name="lib.dir" value="lib" />
-    <path id="jar.path">
+    <path id="json.path">
         <fileset dir="${lib.dir}">
             <include name="*.jar"/>
         </fileset>
@@ -27,14 +26,19 @@
 
     <!-- 暂时存储结果的文件夹 -->
     <property name="build.dir" value="build" />
-    <property name="build.classes" value="${build.dir}/classes" />
     <property name="build.lib" value="${build.dir}/lib" />
+    <property name="build.report" value="${build.dir}/report" />
+    <property name="build.classes" value="${build.dir}/classes" />
+
+    <!-- 打包的 jar 文件 -->
+    <property name="build.jar" value="${build.lib}/MainClass.jar" />
 
     <!-- 编译前新建文件夹 -->
     <target name="prepare" description="Create directories for compiling.">
         <mkdir dir="${build.dir}" />
         <mkdir dir="${build.classes}" />
         <mkdir dir="${build.lib}" />
+        <mkdir dir="${build.report}" />
     </target>
 
     <!-- 编译后删除文件 -->
@@ -45,7 +49,7 @@
     <!-- 编译工程文件代码 -->
     <target name="compile" depends="prepare" description="Compiles all source code.">
         <javac srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="false" >
-            <classpath refid="jar.path" />
+            <classpath refid="json.path" />
         </javac>
     </target>
 
@@ -53,20 +57,51 @@
     <target name="compiletest" depends="prepare, compile" description="Compiles all junit code.">
         <javac srcdir="${test.dir}" destdir="${build.classes}" includeantruntime="false" >
             <classpath refid="junit.path" />
+            <classpath refid="json.path" />
         </javac>
     </target>
 
     <!-- 打包成 jar 文件 -->
     <target name="jar" depends="compiletest" description="Generate test.jar in build/lib">
-        <jar jarfile="${build.lib}/MainClass.jar" basedir="${build.classes}" excludes="**/*Test.class" />
+        <jar jarfile="${build.jar}" basedir="${build.classes}" excludes="**/*Test.class" />
     </target>
 
     <!-- 运行 jar 文件 -->
     <target name="run" depends="jar" description="Run the main.jar">
-        <java classname="" classpath="MainClass.jar" />
+        <java classname="com.pos.main.MainClass" classpath="${build.jar}" >
+            <classpath refid="json.path" />
+        </java>
+    </target>
+
+    <!-- 进行单元测试并且打印报告 -->
+    <target name="junit" depends="compiletest" description="run junit test">
+        <junit printsummary="yes" >
+            <classpath refid="junit.path" />
+            <classpath refid="json.path" />
+            <classpath>
+                <pathelement path="${build.classes}"/>
+            </classpath>
+
+            <formatter type="plain"/>
+            <batchtest fork="yes" todir="${build.report}">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test.java"/>
+                </fileset>
+                <formatter type="xml"/>
+            </batchtest>
+        </junit>
+
+        <junitreport todir="${build.report}">
+            <fileset dir="${build.report}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <!-- 带有框架，可以用noframes选不带框架 -->
+            <report format="noframes" todir="${build.report}"/>
+        </junitreport>
+
     </target>
 
     <!-- 全部执行 -->
-    <target name="all" depends="clean, run" description="Cleans, compiles and build the test.jar" />
+    <target name="all" depends="clean, run, junit" description="Cleans, compiles and build the MainClass.jar" />
 
 </project>

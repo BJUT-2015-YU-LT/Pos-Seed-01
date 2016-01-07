@@ -25,7 +25,7 @@ public class CartTest {
     @Test
     public void testPrintAll() throws Exception {
         cart = new Cart(path);
-        Double result = 22.0;
+        Double result = 23.0;
         assertEquals(result, cart.printAll());
     }
 

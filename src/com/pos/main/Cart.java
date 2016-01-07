@@ -39,17 +39,13 @@ public class Cart {
         JSONArray items = JSONArray.fromObject(result);
 
         for (int i = 0; i < items.size(); i++) {
-            Item item = new Item();
 
             bardcode = items.getJSONObject(i).getString("barcode");
             name = items.getJSONObject(i).getString("name");
             unit =items.getJSONObject(i).getString("unit");
             price = items.getJSONObject(i).getDouble("price");
 
-            item.setBarcode(bardcode);
-            item.setName(name);
-            item.setUnit(unit);
-            item.setPrice(price);
+            Item item = new Item(bardcode, name, unit, price);
 
             if ( name.equals("可口可乐") ) colaList.add(item);
             if ( name.equals("雪碧") ) spirteList.add(item);

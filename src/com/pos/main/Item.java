@@ -10,6 +10,20 @@ public class Item {
     private String unit;
     private Double price;
 
+    public Item() {
+        this.setBarcode(null);
+        this.setName(null);
+        this.setUnit(null);
+        this.setPrice(0.0);
+    }
+
+    public Item(String barcode, String name, String unit, Double price) {
+        this.setBarcode(barcode);
+        this.setName(name);
+        this.setUnit(unit);
+        this.setPrice(price);
+    }
+
     /**
      * 获取 barcode
      * @return
