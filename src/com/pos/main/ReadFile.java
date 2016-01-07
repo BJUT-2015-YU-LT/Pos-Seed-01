@@ -36,5 +36,4 @@ public class ReadFile {
 
         return sb.toString();
     }
-
 }

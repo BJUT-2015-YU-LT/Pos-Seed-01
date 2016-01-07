@@ -16,7 +16,9 @@ public class Cart {
     private static List<Item> itemList = new ArrayList<Item>();
     private String path;
     private Double count;
-
+    private int cola;
+    private int battery;
+    private int sprite;
     /**
      *
      *
@@ -25,6 +27,23 @@ public class Cart {
     public Cart(String path) {
         this.path = path;
         this.count = 0.0;
+        cola=0;
+        battery=0;
+        sprite=0;
+        for (int i = 0; i < itemList.size(); i++) {
+            Item item = itemList.get(i);
+            this.count += item.getPrice();
+            if(item.getName().equals("可口可乐")){
+                cola++;
+
+            }
+            if(item.getName().equals("雪碧")){
+                sprite++;
+            }
+            if(item.getName().equals("电池")){
+                battery++;
+            }
+        }
     }
 
     /**
@@ -54,19 +73,26 @@ public class Cart {
         }
         return true;
     }
-
     /**
      *
      *
      * @return
      */
-    public Double count() {
-        this.dealJson();
+    public void count() {
 
-        for (int i = 0; i < itemList.size(); i++) {
-            Item item = itemList.get(i);
-            this.count += item.getPrice();
-        }
+
+    }
+
+    public int getColaolanumber(){
+        return cola;
+    }
+    public int getSpritenumber(){
+        return sprite;
+    }
+    public int getBatterynumber(){
+        return battery;
+    }
+    public double getCount(){
         return count;
     }
 }
