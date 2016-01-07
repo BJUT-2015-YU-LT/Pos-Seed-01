@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 新建一个项目 -->
-<project name="AntJunit" default="compile" basedir=".">
+<project name="AntJunit" default="compiletest" basedir=".">
 
     <!-- 包含源代码的文件夹 -->
     <property name="src.dir" value="src" />
 
-    <!-- 单元测试引入源代码中的类 -->
+    <!-- 单元测试源代码的文件夹 -->
     <property name="test.dir" value="test" />
-    <path id="java.path">
-        <fileset dir="src">
-            <include name="*.java"/>
-        </fileset>
-    </path>
+
 
     <!-- 单元测试引入 Junit 的 jar 文件夹 -->
     <property name="junit.dir" value="/Applications/IntelliJ IDEA 15.app/Contents/lib" />
@@ -26,7 +22,6 @@
     <path id="jar.path">
         <fileset dir="${lib.dir}">
             <include name="*.jar"/>
-            <include name="*.java"/>
         </fileset>
     </path>
 
@@ -55,12 +50,23 @@
     </target>
 
     <!-- 编译单元测试文件代码 -->
-    <target name="compiletest" depends="prepare" description="Compiles all junit code.">
+    <target name="compiletest" depends="prepare, compile" description="Compiles all junit code.">
         <javac srcdir="${test.dir}" destdir="${build.classes}" includeantruntime="false" >
-            <classpath refid="java.path" />
             <classpath refid="junit.path" />
-
         </javac>
     </target>
+
+    <!-- 打包成 jar 文件 -->
+    <target name="jar" depends="compiletest" description="Generate test.jar in build/lib">
+        <jar jarfile="${build.lib}/MainClass.jar" basedir="${build.classes}" excludes="**/*Test.class" />
+    </target>
+
+    <!-- 运行 jar 文件 -->
+    <target name="run" depends="jar" description="Run the main.jar">
+        <java classname="" classpath="MainClass.jar" />
+    </target>
+
+    <!-- 全部执行 -->
+    <target name="all" depends="clean, run" description="Cleans, compiles and build the test.jar" />
 
 </project>
