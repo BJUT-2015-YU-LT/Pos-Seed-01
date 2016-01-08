@@ -15,7 +15,7 @@ public class CartTest {
 
     @Before
     public void setUp() throws Exception {
-        path = "./data/data1.json";
+        path = "./data/data2.json";
     }
 
     /**
@@ -25,8 +25,8 @@ public class CartTest {
     @Test
     public void testPrintAll() throws Exception {
         cart = new Cart(path);
-        Double result = 23.0;
-        assertEquals(result, cart.printAll());
+        Double discount = 0.40;
+        assertEquals(discount, cart.printAll());
     }
 
     /**

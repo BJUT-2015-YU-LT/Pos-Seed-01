@@ -16,6 +16,7 @@ public class Cart {
     private static List<Item> batterryList = new ArrayList<Item>();
 
     private Double count;
+    private Double discount;
 
     /**
      * 构造函数, 将 Json 解析成对象,存到 list 中
@@ -23,12 +24,14 @@ public class Cart {
      */
     public Cart(String path) {
         this.count = 0.0;
+        this.discount = 0.0;
 
         String result = "";
         String bardcode = "";
         String name = "";
         String unit = "";
         Double price = 0.0;
+        Double discount = 1.0;
 
         try {
             result = ReadFile.ReadFile(path);
@@ -44,8 +47,9 @@ public class Cart {
             name = items.getJSONObject(i).getString("name");
             unit =items.getJSONObject(i).getString("unit");
             price = items.getJSONObject(i).getDouble("price");
+            discount = items.getJSONObject(i).getDouble("discount");
 
-            Item item = new Item(bardcode, name, unit, price);
+            Item item = new Item(bardcode, name, unit, price, discount);
 
             if ( name.equals("可口可乐") ) colaList.add(item);
             if ( name.equals("雪碧") ) spirteList.add(item);
@@ -61,32 +65,36 @@ public class Cart {
         System.out.println("***商店购物清单***");
         if (colaList.size() > 0) {
             Item item = colaList.get(0);
-            count += print(item.getName(), colaList.size(), item.getPrice());
+            count += print(colaList.size(), item);
+            discount += item.getDiscount()*count;
         }
         if (spirteList.size() > 0) {
             Item item = spirteList.get(0);
-            count += print(item.getName(), spirteList.size(), item.getPrice());
+            count += print(spirteList.size(), item);
+            discount += item.getDiscount()*count;
         }
         if (batterryList.size() > 0) {
             Item item = batterryList.get(0);
-            count += print(item.getName(), batterryList.size(), item.getPrice());
+            count += print(batterryList.size(), item);
+            discount += item.getDiscount()*count;
         }
 
-        System.out.println("----------------------\n" + "总计：" + count + "(元)\n**********************");
-        return count;
+        System.out.println("----------------------");
+        System.out.println("总计：" + (count - discount) + "(元)\n" + "节省："+ discount +"(元)\n");
+        System.out.println("**********************\n");
+
+        return discount;
     }
 
-    /**
-     * 分别打印输出商品信息
-     * @param name
-     * @param size
-     * @param price
-     * @return
-     */
-    public static Double print(String name, int size, Double price) {
+    public static Double print(int size, Item item) {
+        String name = item.getName();
+        String unit = item.getUnit();
+        Double price = item.getPrice();
+        Double discount = item.getDiscount();
+
         String result = "名称：" + name
-                + "，数量：" + size + "瓶，单价：" + price
-                + "(元)，小计：" + size * price + "(元)";
+                + "，数量：" + size + unit  + "，单价：" + price
+                + "(元)，小计：" + size * price * discount + "(元)";
         System.out.println(result);
         return size*price;
     }

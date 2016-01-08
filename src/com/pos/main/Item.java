@@ -9,19 +9,22 @@ public class Item {
     private String name;
     private String unit;
     private Double price;
+    private Double discount;
 
     public Item() {
         this.setBarcode(null);
         this.setName(null);
         this.setUnit(null);
         this.setPrice(0.0);
+        this.setDiscount(0.0);
     }
 
-    public Item(String barcode, String name, String unit, Double price) {
+    public Item(String barcode, String name, String unit, Double price, Double discount) {
         this.setBarcode(barcode);
         this.setName(name);
         this.setUnit(unit);
         this.setPrice(price);
+        this.setDiscount(discount);
     }
 
     /**
@@ -58,6 +61,14 @@ public class Item {
     }
 
     /**
+     * 获取 discount
+     * @return
+     */
+    public Double getDiscount() {
+        return this.discount;
+    }
+
+    /**
      * 设置 barcode
      * @param barcode
      */
@@ -89,5 +100,12 @@ public class Item {
         this.price = price;
     }
 
+    /**
+     * 设置 discount
+     * @param discount
+     */
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 
 }
