@@ -18,9 +18,8 @@ public class ItemTest {
     public void testGetMethod() throws Exception {
         Double price = 3.00;
         Double discount = 0.8;
-        Item item = new Item("ITEM000000", "可口可乐", "瓶", price, discount);
+        Item item = new Item("可口可乐", "瓶", price, discount);
 
-        assertEquals("ITEM000000", item.getBarcode());
         assertEquals("可口可乐", item.getName());
         assertEquals("瓶", item.getUnit());
         assertEquals(price, item.getPrice());
@@ -37,12 +36,11 @@ public class ItemTest {
         Double discount = 0.8;
 
         Item item = new Item();
-        item.setBarcode("ITEM000000");
         item.setName("可口可乐");
         item.setUnit("瓶");
         item.setPrice(price);
         item.setDiscount(discount);
-        assertEquals("ITEM000000", item.getBarcode());
+
         assertEquals("可口可乐", item.getName());
         assertEquals("瓶", item.getUnit());
         assertEquals(price, item.getPrice());

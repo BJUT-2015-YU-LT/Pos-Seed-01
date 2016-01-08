@@ -3,6 +3,9 @@ package com.pos.main;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,11 +14,31 @@ import static org.junit.Assert.*;
 public class CartTest {
 
     private Cart cart;
+    private String list;
     private String path;
+    private Map<String, Item> index = new HashMap<>();
 
     @Before
     public void setUp() throws Exception {
-        path = "./data/data2.json";
+        list = "./data/data3_1.json";
+        path = "./data/data3_2.json";
+        cart = new Cart(list, path);
+        String result = ReadFile.ReadFile(list);
+        index = cart.readIndex(result);
+    }
+
+    /**
+     * 测试返回的 Map
+     * @throws Exception
+     */
+    @Test
+    public void testReadIndex() throws Exception {
+        Item cola = index.get("ITEM000000");
+        Item spirte = index.get("ITEM000001");
+        Item batterry = index.get("ITEM000004");
+        assertEquals("可口可乐", cola.getName());
+        assertEquals("雪碧", spirte.getName());
+        assertEquals("电池", batterry.getName());
     }
 
     /**
@@ -24,8 +47,7 @@ public class CartTest {
      */
     @Test
     public void testPrintAll() throws Exception {
-        cart = new Cart(path);
-        Double result = 1.60;
+        Double result = 23.00;
         assertEquals(result, cart.printAll());
     }
 
@@ -35,10 +57,11 @@ public class CartTest {
      */
     @Test
     public void testPrint() throws Exception {
-        Item item = new Item("ITEM000004", "电池", "个", 2.00, 0.8);
+        Item item = new Item("电池", "个", 2.00, 1.0);
         int size = 2;
         Double result = size * 2.00;
         assertEquals(result, cart.print(size, item));
     }
+
 }
 

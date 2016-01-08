@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
  */
 public class Item {
 
-    private String barcode;
     private String name;
     private String unit;
     private Double price;
@@ -16,28 +15,17 @@ public class Item {
     static DecimalFormat df = new DecimalFormat( "0.00");
 
     public Item() {
-        this.setBarcode(null);
         this.setName(null);
         this.setUnit(null);
         this.setPrice(0.00);
-        this.setDiscount(0.0);
+        this.setDiscount(1.0);
     }
 
-    public Item(String barcode, String name, String unit, Double price, Double discount) {
-        this.setBarcode(barcode);
+    public Item(String name, String unit, Double price, Double discount) {
         this.setName(name);
         this.setUnit(unit);
         this.setPrice(price);
         this.setDiscount(discount);
-    }
-
-    /**
-     * 获取 barcode
-     * @return
-     */
-    public String getBarcode() {
-
-        return this.barcode;
     }
 
     /**
@@ -70,14 +58,6 @@ public class Item {
      */
     public Double getDiscount() {
         return this.discount;
-    }
-
-    /**
-     * 设置 barcode
-     * @param barcode
-     */
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
     }
 
     /**
