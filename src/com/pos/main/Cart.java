@@ -22,13 +22,13 @@ public class Cart {
      * @param path
      */
     public Cart(String path) {
-        this.count = 0.0;
+        this.count = 0.00;
 
         String result = "";
         String bardcode = "";
         String name = "";
         String unit = "";
-        Double price = 0.0;
+        Double price = 0.00;
 
         try {
             result = ReadFile.ReadFile(path);
@@ -72,7 +72,9 @@ public class Cart {
             count += print(item.getName(), batterryList.size(), item.getPrice());
         }
 
-        System.out.println("----------------------\n" + "总计：" + count + "(元)\n**********************");
+        System.out.println("----------------------\n");
+        System.out.println("总计：" + Item.df.format(count) + "(元)\n");
+        System.out.println("**********************");
         return count;
     }
 
@@ -85,8 +87,8 @@ public class Cart {
      */
     public static Double print(String name, int size, Double price) {
         String result = "名称：" + name
-                + "，数量：" + size + "瓶，单价：" + price
-                + "(元)，小计：" + size * price + "(元)";
+                + "，数量：" + size + "瓶，单价：" + Item.df.format(price)
+                + "(元)，小计：" + Item.df.format(size * price) + "(元)";
         System.out.println(result);
         return size*price;
     }

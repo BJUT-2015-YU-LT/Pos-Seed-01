@@ -16,7 +16,7 @@ public class ItemTest {
      */
     @Test
     public void testGetMethod() throws Exception {
-        Double price = 3.0;
+        Double price = 3.00;
         Item item = new Item("ITEM000000", "可口可乐", "瓶", price);
         assertEquals("ITEM000000", item.getBarcode());
         assertEquals("可口可乐", item.getName());
@@ -30,7 +30,7 @@ public class ItemTest {
      */
     @Test
     public void testSetMethod() throws Exception {
-        Double price = 3.0;
+        Double price = 3.00;
         Item item = new Item();
         item.setBarcode("ITEM000000");
         item.setName("可口可乐");
