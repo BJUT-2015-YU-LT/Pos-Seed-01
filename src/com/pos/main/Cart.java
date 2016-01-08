@@ -23,14 +23,14 @@ public class Cart {
      * @param path
      */
     public Cart(String path) {
-        this.count = 0.0;
+        this.count = 0.00;
         this.discount = 0.0;
 
         String result = "";
         String bardcode = "";
         String name = "";
         String unit = "";
-        Double price = 0.0;
+        Double price = 0.00;
         Double discount = 1.0;
 
         try {
@@ -80,7 +80,8 @@ public class Cart {
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + (count - discount) + "(元)\n" + "节省："+ discount +"(元)\n");
+        System.out.println("总计：" + Item.df.format(count - discount) + "(元)\n");
+        System.out.println("节省："+ Item.df.format(discount) +"(元)\n");
         System.out.println("**********************\n");
 
         return discount;
@@ -93,8 +94,9 @@ public class Cart {
         Double discount = item.getDiscount();
 
         String result = "名称：" + name
-                + "，数量：" + size + unit  + "，单价：" + price
-                + "(元)，小计：" + size * price * discount + "(元)";
+                + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
+                + "(元)，小计：" + Item.df.format(size * price * discount) + "(元)";
+
         System.out.println(result);
         return size*price;
     }

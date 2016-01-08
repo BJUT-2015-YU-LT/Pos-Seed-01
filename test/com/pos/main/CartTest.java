@@ -25,8 +25,8 @@ public class CartTest {
     @Test
     public void testPrintAll() throws Exception {
         cart = new Cart(path);
-        Double discount = 0.40;
-        assertEquals(discount, cart.printAll());
+        Double result = 1.60;
+        assertEquals(result, cart.printAll());
     }
 
     /**
@@ -35,12 +35,10 @@ public class CartTest {
      */
     @Test
     public void testPrint() throws Exception {
-        String name = "可口可乐";
+        Item item = new Item("ITEM000004", "电池", "个", 2.00, 0.8);
         int size = 2;
-        Double price = 3.0;
-        Double result = size*price;
-
-        assertEquals(result, cart.print(name, size, price));
+        Double result = size * 2.00;
+        assertEquals(result, cart.print(size, item));
     }
 }
 

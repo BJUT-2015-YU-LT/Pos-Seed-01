@@ -1,21 +1,25 @@
 package com.pos.main;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by pengzhendong on 16/1/6.
  */
 public class Item {
-    
+
     private String barcode;
     private String name;
     private String unit;
     private Double price;
     private Double discount;
 
+    static DecimalFormat df = new DecimalFormat( "0.00");
+
     public Item() {
         this.setBarcode(null);
         this.setName(null);
         this.setUnit(null);
-        this.setPrice(0.0);
+        this.setPrice(0.00);
         this.setDiscount(0.0);
     }
 
