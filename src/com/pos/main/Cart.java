@@ -16,7 +16,7 @@ public class Cart {
     private static List<Item> batterryList = new ArrayList<Item>();
 
     private Double count;
-    private Double discount;
+    private Double reduce;
 
     /**
      * 构造函数, 将 Json 解析成对象,存到 list 中
@@ -24,7 +24,7 @@ public class Cart {
      */
     public Cart(String path) {
         this.count = 0.00;
-        this.discount = 0.0;
+        this.reduce = 0.00;
 
         String result = "";
         String bardcode = "";
@@ -66,25 +66,25 @@ public class Cart {
         if (colaList.size() > 0) {
             Item item = colaList.get(0);
             count += print(colaList.size(), item);
-            discount += item.getDiscount()*count;
+            reduce = count - item.getDiscount()*count;
         }
         if (spirteList.size() > 0) {
             Item item = spirteList.get(0);
             count += print(spirteList.size(), item);
-            discount += item.getDiscount()*count;
+            reduce = count - item.getDiscount()*count;
         }
         if (batterryList.size() > 0) {
             Item item = batterryList.get(0);
             count += print(batterryList.size(), item);
-            discount += item.getDiscount()*count;
+            reduce = count - item.getDiscount()*count;
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + Item.df.format(count - discount) + "(元)\n");
-        System.out.println("节省："+ Item.df.format(discount) +"(元)\n");
+        System.out.println("总计：" + Item.df.format(count) + "(元)\n");
+        System.out.println("节省："+ Item.df.format(reduce) +"(元)\n");
         System.out.println("**********************\n");
 
-        return discount;
+        return count - reduce;
     }
 
     public static Double print(int size, Item item) {
