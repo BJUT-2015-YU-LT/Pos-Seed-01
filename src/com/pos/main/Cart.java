@@ -16,9 +16,9 @@ public class Cart {
     private static List<Item> itemList = new ArrayList<Item>();
     private String path;
     private Double count;
-    private int cola;
-    private int battery;
-    private int sprite;
+    private Double cola;
+    private Double battery;
+    private Double sprite;
     /**
      *
      *
@@ -26,24 +26,12 @@ public class Cart {
      */
     public Cart(String path) {
         this.path = path;
-        this.count = 0.0;
-        cola=0;
-        battery=0;
-        sprite=0;
-        for (int i = 0; i < itemList.size(); i++) {
-            Item item = itemList.get(i);
-            this.count += item.getPrice();
-            if(item.getName().equals("可口可乐")){
-                cola++;
+        this.count = 0.00;
+        this.cola=0.00;
+        this.battery=0.00;
+        this.sprite=0.00;
 
-            }
-            if(item.getName().equals("雪碧")){
-                sprite++;
-            }
-            if(item.getName().equals("电池")){
-                battery++;
-            }
-        }
+
     }
 
     /**
@@ -78,21 +66,24 @@ public class Cart {
      *
      * @return
      */
-    public void count() {
-
-
+    public double count() {
+        for (int i = 0; i < itemList.size(); i++) {
+            Item item = itemList.get(i);
+            this.count += item.getPrice();
+            if(item.getName().equals("可口可乐")){
+                cola++;
+            }
+            if(item.getName().equals("雪碧")){
+                sprite++;
+            }
+            if(item.getName().equals("电池")){
+                battery++;
+            }
+        }
+        System.out.println("可口可乐"+String.format("%.0f",cola)+"瓶"+"小计:"+String.format("%.2f",3*cola)+"元");
+        System.out.println("雪碧"+sprite+"瓶"+"小计:"+String.format("%.2f",3*sprite)+"元");
+        System.out.println("电池"+battery+"个"+"小计:"+String.format("%.2f",0.8*battery)+"元");
+        return  count;
     }
 
-    public int getColaolanumber(){
-        return cola;
-    }
-    public int getSpritenumber(){
-        return sprite;
-    }
-    public int getBatterynumber(){
-        return battery;
-    }
-    public double getCount(){
-        return count;
-    }
 }

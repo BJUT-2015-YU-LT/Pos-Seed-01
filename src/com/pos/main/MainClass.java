@@ -8,7 +8,8 @@ public class MainClass {
 
     public static void main(String[] args) {
         Cart cart = new Cart("./data/data1.json");
-        System.out.println(cart.getColaolanumber());
+        cart.dealJson();
+        System.out.println("共计："+String.format("%.2f",cart.count()));
 
     }
 }
