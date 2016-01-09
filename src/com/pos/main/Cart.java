@@ -51,9 +51,9 @@ public class Cart {
 
             Item item = new Item(bardcode, name, unit, price, discount);
 
-            if ( name.equals("可口可乐") ) colaList.add(item);
-            if ( name.equals("雪碧") ) spirteList.add(item);
-            if ( name.equals("电池") ) batterryList.add(item);
+            if ( name.equals("可口可乐") ) this.colaList.add(item);
+            if ( name.equals("雪碧") ) this.spirteList.add(item);
+            if ( name.equals("电池") ) this.batterryList.add(item);
         }
     }
 
@@ -63,28 +63,25 @@ public class Cart {
      */
     public Double printAll() {
         System.out.println("***商店购物清单***");
-        if (colaList.size() > 0) {
-            Item item = colaList.get(0);
-            count += print(colaList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.colaList.size() > 0) {
+            Item item = this.colaList.get(0);
+            this.count += print(this.colaList.size(), item);
         }
-        if (spirteList.size() > 0) {
-            Item item = spirteList.get(0);
-            count += print(spirteList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.spirteList.size() > 0) {
+            Item item = this.spirteList.get(0);
+            this.count += print(this.spirteList.size(), item);
         }
-        if (batterryList.size() > 0) {
-            Item item = batterryList.get(0);
-            count += print(batterryList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.batterryList.size() > 0) {
+            Item item = this.batterryList.get(0);
+            this.count += print(this.batterryList.size(), item);
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + Item.df.format(count - reduce) + "(元)\n");
-        System.out.println("节省："+ Item.df.format(reduce) +"(元)\n");
-        System.out.println("**********************\n");
+        System.out.println("总计：" + Item.df.format(this.count - this.reduce) + "(元)");
+        System.out.println("节省："+ Item.df.format(this.reduce) +"(元)");
+        System.out.println("**********************");
 
-        return count - reduce;
+        return this.reduce;
     }
 
     /**
@@ -93,11 +90,12 @@ public class Cart {
      * @param item
      * @return
      */
-    public static Double print(int size, Item item) {
+    public Double print(int size, Item item) {
         String name = item.getName();
         String unit = item.getUnit();
         Double price = item.getPrice();
         Double discount = item.getDiscount();
+        this.reduce += size * price * (1 - discount);
 
         String result = "名称：" + name
                 + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
