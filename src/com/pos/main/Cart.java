@@ -81,7 +81,7 @@ public class Cart {
         System.out.println("节省："+ Item.df.format(this.reduce) +"(元)");
         System.out.println("**********************");
 
-        return this.reduce;
+        return this.count - this.reduce;
     }
 
     /**
