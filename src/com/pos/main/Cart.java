@@ -97,21 +97,41 @@ public class Cart {
      * @return
      */
     public Double printAll() {
+        int colaNum = this.colaList.size();
+        int spirteNum = this.spirteList.size();
+        int batterryNum = this.batterryList.size();
+
         System.out.println("***商店购物清单***");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("打印时间：" + df.format(new Date()));
+        System.out.println("----------------------");
 
-        if (this.colaList.size() > 0) {
+        if (colaNum > 0) {
             Item item = this.colaList.get(0);
-            this.count += print(this.colaList.size(), item);
+            this.count += print(colaNum, item);
         }
-        if (this.spirteList.size() > 0) {
+        if (spirteNum > 0) {
             Item item = this.spirteList.get(0);
-            this.count += print(this.spirteList.size(), item);
+            this.count += print(spirteNum, item);
         }
-        if (this.batterryList.size() > 0) {
+        if (batterryNum > 0) {
             Item item = this.batterryList.get(0);
-            this.count += print(this.batterryList.size(), item);
+            this.count += print(batterryNum, item);
+        }
+        System.out.println("----------------------");
+        System.out.println("挥泪赠送商品：");
+
+        if (colaNum / 2 > 0) {
+            Item item = this.colaList.get(0);
+            System.out.println("名称：可口可乐，数量：" + (colaNum / 2) + item.getUnit());
+        }
+        if (spirteNum / 2 > 0) {
+            Item item = this.spirteList.get(0);
+            System.out.println("名称：可口可乐，数量：" + (spirteNum / 2) + item.getUnit());
+        }
+        if (batterryNum / 2 > 0) {
+            Item item = this.batterryList.get(0);
+            System.out.println("名称：可口可乐，数量：" + (batterryNum / 2) + item.getUnit());
         }
 
         System.out.println("----------------------");
