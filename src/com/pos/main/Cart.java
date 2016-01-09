@@ -47,9 +47,9 @@ public class Cart {
 
             Item item = new Item(bardcode, name, unit, price);
 
-            if ( name.equals("可口可乐") ) colaList.add(item);
-            if ( name.equals("雪碧") ) spirteList.add(item);
-            if ( name.equals("电池") ) batterryList.add(item);
+            if ( name.equals("可口可乐") ) this.colaList.add(item);
+            if ( name.equals("雪碧") ) this.spirteList.add(item);
+            if ( name.equals("电池") ) this.batterryList.add(item);
         }
     }
 
@@ -59,23 +59,23 @@ public class Cart {
      */
     public Double printAll() {
         System.out.println("***商店购物清单***");
-        if (colaList.size() > 0) {
-            Item item = colaList.get(0);
-            count += print(item.getName(), colaList.size(), item.getPrice());
+        if (this.colaList.size() > 0) {
+            Item item = this.colaList.get(0);
+            this.count += print(item.getName(), this.colaList.size(), item.getPrice());
         }
-        if (spirteList.size() > 0) {
-            Item item = spirteList.get(0);
-            count += print(item.getName(), spirteList.size(), item.getPrice());
+        if (this.spirteList.size() > 0) {
+            Item item = this.spirteList.get(0);
+            this.count += print(item.getName(), this.spirteList.size(), item.getPrice());
         }
-        if (batterryList.size() > 0) {
-            Item item = batterryList.get(0);
-            count += print(item.getName(), batterryList.size(), item.getPrice());
+        if (this.batterryList.size() > 0) {
+            Item item = this.batterryList.get(0);
+            this.count += print(item.getName(), this.batterryList.size(), item.getPrice());
         }
 
-        System.out.println("----------------------\n");
-        System.out.println("总计：" + Item.df.format(count) + "(元)\n");
+        System.out.println("----------------------");
+        System.out.println("总计：" + Item.df.format(this.count) + "(元)");
         System.out.println("**********************");
-        return count;
+        return this.count;
     }
 
     /**
