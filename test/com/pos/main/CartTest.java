@@ -26,7 +26,7 @@ public class CartTest {
      */
     @Test
     public void testPrintAll() throws Exception {
-        Double result = 1.60;
+        Double result = 1 * 2.00 * (1 - 0.8);
         assertEquals(result, this.cart.printAll());
     }
 
@@ -38,7 +38,7 @@ public class CartTest {
     public void testPrint() throws Exception {
         Item item = new Item("ITEM000004", "电池", "个", 2.00, 0.8);
         int size = 2;
-        Double result = size * 2.00;
+        Double result = size * 2.00 * 0.8;
         assertEquals(result, this.cart.print(size, item));
     }
 }
