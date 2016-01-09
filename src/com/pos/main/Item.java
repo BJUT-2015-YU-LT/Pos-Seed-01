@@ -1,7 +1,7 @@
 package com.pos.main;
 
 /**
- * Created by pengzhendong on 16/1/6.
+ * Created by wangleqing on 16/1/6.
  */
 public class Item {
     

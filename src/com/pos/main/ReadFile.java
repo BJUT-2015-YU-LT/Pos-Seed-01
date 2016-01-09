@@ -3,7 +3,7 @@ package com.pos.main;
 import java.io.*;
 
 /**
- * Created by pengzhendong on 16/1/6.
+ * Created by wangleqing on 16/1/6.
  */
 public class ReadFile {
 
