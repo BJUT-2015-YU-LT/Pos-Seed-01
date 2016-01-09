@@ -94,28 +94,25 @@ public class Cart {
      */
     public Double printAll() {
         System.out.println("***商店购物清单***");
-        if (colaList.size() > 0) {
-            Item item = colaList.get(0);
-            count += print(colaList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.colaList.size() > 0) {
+            Item item = this.colaList.get(0);
+            this.count += print(this.colaList.size(), item);
         }
-        if (spirteList.size() > 0) {
-            Item item = spirteList.get(0);
-            count += print(spirteList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.spirteList.size() > 0) {
+            Item item = this.spirteList.get(0);
+            this.count += print(this.spirteList.size(), item);
         }
-        if (batterryList.size() > 0) {
-            Item item = batterryList.get(0);
-            count += print(batterryList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.batterryList.size() > 0) {
+            Item item = this.batterryList.get(0);
+            this.count += print(this.batterryList.size(), item);
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + Item.df.format(count - reduce) + "(元)\n");
-        System.out.println("节省："+ Item.df.format(reduce) +"(元)\n");
+        System.out.println("总计：" + Item.df.format(this.count - this.reduce) + "(元)\n");
+        System.out.println("节省："+ Item.df.format(this.reduce) +"(元)\n");
         System.out.println("**********************\n");
 
-        return count;
+        return this.reduce;
     }
 
     /**
