@@ -19,24 +19,12 @@ public class CartTest {
 
     @Before
     public void setUp() throws Exception {
-        list = "./data/data3_1.json";
-        path = "./data/data3_2.json";
-        cart = new Cart(list, path);
+        this.list = "./data/data3_1.json";
+        this.path = "./data/data3_2.json";
+        this.cart = new Cart(list, path);
     }
 
-    /**
-     * 测试返回的 Map
-     * @throws Exception
-     */
-    @Test
-    public void testReadIndex() throws Exception {
-        Item cola = cart.getIndexList().get("ITEM000000");
-        Item spirte = cart.getIndexList().get("ITEM000001");
-        Item batterry = cart.getIndexList().get("ITEM000004");
-        assertEquals("可口可乐", cola.getName());
-        assertEquals("雪碧", spirte.getName());
-        assertEquals("电池", batterry.getName());
-    }
+
 
     /**
      * 测试打印所有商品价格
@@ -45,7 +33,7 @@ public class CartTest {
     @Test
     public void testPrintAll() throws Exception {
         Double result = 23.00;
-        assertEquals(result, cart.printAll());
+        assertEquals(result, this.cart.printAll());
     }
 
     /**
@@ -57,7 +45,7 @@ public class CartTest {
         Item item = new Item("电池", "个", 2.00, 1.0);
         int size = 2;
         Double result = size * 2.00;
-        assertEquals(result, cart.print(size, item));
+        assertEquals(result, this.cart.print(size, item));
     }
 
 }

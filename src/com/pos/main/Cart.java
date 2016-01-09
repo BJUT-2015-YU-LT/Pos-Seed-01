@@ -13,9 +13,9 @@ public class Cart {
 
     private static Map<String, Item> indexList = new HashMap<>();
 
-    private static List<Item> colaList = new ArrayList<>();
-    private static List<Item> spirteList = new ArrayList<>();
-    private static List<Item> batterryList = new ArrayList<>();
+    private List<Item> colaList = new ArrayList<>();
+    private List<Item> spirteList = new ArrayList<>();
+    private List<Item> batterryList = new ArrayList<>();
 
     private Double count;
     private Double reduce;
@@ -63,7 +63,7 @@ public class Cart {
      * 读取索引文件
      * @return
      */
-    public Map readIndex() {
+    public Map<String, Item> readIndex() {
         String name = "";
         String unit = "";
         Double price = 0.00;
@@ -111,7 +111,7 @@ public class Cart {
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + Item.df.format(count) + "(元)\n");
+        System.out.println("总计：" + Item.df.format(count - reduce) + "(元)\n");
         System.out.println("节省："+ Item.df.format(reduce) +"(元)\n");
         System.out.println("**********************\n");
 
