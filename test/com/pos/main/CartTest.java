@@ -27,12 +27,12 @@ public class CartTest {
 
 
     /**
-     * 测试打印所有商品价格
+     * 测试所有商品节省的价钱
      * @throws Exception
      */
     @Test
     public void testPrintAll() throws Exception {
-        Double result = 23.00;
+        Double result = 0.00;
         assertEquals(result, this.cart.printAll());
     }
 
@@ -42,9 +42,9 @@ public class CartTest {
      */
     @Test
     public void testPrint() throws Exception {
-        Item item = new Item("电池", "个", 2.00, 1.0);
+        Item item = new Item("电池", "个", 2.00, 0.8);
         int size = 2;
-        Double result = size * 2.00;
+        Double result = size * 2.00 * 0.8;
         assertEquals(result, this.cart.print(size, item));
     }
 
