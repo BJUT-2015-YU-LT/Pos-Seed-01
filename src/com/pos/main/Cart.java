@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class Cart {
 
-    private static List<Item> colaList = new ArrayList<Item>();
-    private static List<Item> spirteList = new ArrayList<Item>();
-    private static List<Item> batterryList = new ArrayList<Item>();
+    private List<Item> colaList = new ArrayList<Item>();
+    private List<Item> spirteList = new ArrayList<Item>();
+    private List<Item> batterryList = new ArrayList<Item>();
 
     private Double count;
     private Double reduce;
