@@ -108,11 +108,11 @@ public class Cart {
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + Item.df.format(this.count - this.reduce) + "(元)\n");
-        System.out.println("节省："+ Item.df.format(this.reduce) +"(元)\n");
-        System.out.println("**********************\n");
+        System.out.println("总计：" + Item.df.format(this.count - this.reduce) + "(元)");
+        System.out.println("节省："+ Item.df.format(this.reduce) +"(元)");
+        System.out.println("**********************");
 
-        return this.reduce;
+        return this.count;
     }
 
     /**
@@ -121,11 +121,12 @@ public class Cart {
      * @param item
      * @return
      */
-    public static Double print(int size, Item item) {
+    public Double print(int size, Item item) {
         String name = item.getName();
         String unit = item.getUnit();
         Double price = item.getPrice();
         Double discount = item.getDiscount();
+        this.reduce += size * price * (1 - discount);
 
         String result = "名称：" + name
                 + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
