@@ -16,15 +16,12 @@ public class CartTest {
     private Cart cart;
     private String list;
     private String path;
-    private Map<String, Item> index = new HashMap<>();
 
     @Before
     public void setUp() throws Exception {
         list = "./data/data3_1.json";
         path = "./data/data3_2.json";
         cart = new Cart(list, path);
-        String result = ReadFile.ReadFile(list);
-        index = cart.readIndex(result);
     }
 
     /**
@@ -33,9 +30,9 @@ public class CartTest {
      */
     @Test
     public void testReadIndex() throws Exception {
-        Item cola = index.get("ITEM000000");
-        Item spirte = index.get("ITEM000001");
-        Item batterry = index.get("ITEM000004");
+        Item cola = cart.getIndexList().get("ITEM000000");
+        Item spirte = cart.getIndexList().get("ITEM000001");
+        Item batterry = cart.getIndexList().get("ITEM000004");
         assertEquals("可口可乐", cola.getName());
         assertEquals("雪碧", spirte.getName());
         assertEquals("电池", batterry.getName());

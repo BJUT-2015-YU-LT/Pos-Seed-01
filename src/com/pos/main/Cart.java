@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class Cart {
 
-    private static Map<String, Item> indexList = new HashMap<String, Item>();
+    private static Map<String, Item> indexList = new HashMap<>();
 
     private static List<Item> colaList = new ArrayList<>();
     private static List<Item> spirteList = new ArrayList<>();
@@ -19,6 +19,7 @@ public class Cart {
 
     private Double count;
     private Double reduce;
+    private String list = "";
 
     /**
      * 构造函数, 将 Json 解析成对象,存到 list 中
@@ -31,17 +32,16 @@ public class Cart {
         String barcode= "";
         String name = "";
 
-        String list ="";
-        String result = "";
+        String result ="";
 
         try {
-            list = ReadFile.ReadFile(index);
+            this.list = ReadFile.ReadFile(index);
             result = ReadFile.ReadFile(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        this.readIndex(list);
+        this.readIndex();
 
         JSONArray items = JSONArray.fromObject(result);
 
@@ -61,15 +61,15 @@ public class Cart {
 
     /**
      * 读取索引文件
-     * @param result
+     * @return
      */
-    public Map readIndex(String result) {
+    public Map readIndex() {
         String name = "";
         String unit = "";
         Double price = 0.00;
         Double discount = 1.0;
 
-        JSONObject objs = JSONObject.fromObject(result);
+        JSONObject objs = JSONObject.fromObject(this.list);
         Iterator iterator = objs.keys();
         String key = "";
 
@@ -136,6 +136,14 @@ public class Cart {
 
         System.out.println(result);
         return size*price;
+    }
+
+    /**
+     * 获取索引列表
+     * @return
+     */
+    public Map<String, Item> getIndexList() {
+        return this.readIndex();
     }
 
 }
