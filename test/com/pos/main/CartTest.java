@@ -25,7 +25,7 @@ public class CartTest {
     }
 
     /**
-     * 测试打印所有商品价格
+     * 测试所有商品节省的价钱
      * @throws Exception
      */
     @Test
