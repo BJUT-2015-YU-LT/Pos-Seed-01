@@ -15,8 +15,8 @@ public class ReadFileTest {
 
     @Before
     public void setUp() throws Exception {
-        readFile = new ReadFile();
-        path = "./data/data0.json";
+        this.readFile = new ReadFile();
+        this.path = "./data/data0.json";
     }
 
     /**
@@ -25,7 +25,7 @@ public class ReadFileTest {
      */
     @Test
     public void testReadFile() throws Exception {
-        String result = readFile.ReadFile(path);
+        String result = this.readFile.ReadFile(this.path);
         assertEquals("{\"firstName\":\"Brett\"}", result);
     }
 }

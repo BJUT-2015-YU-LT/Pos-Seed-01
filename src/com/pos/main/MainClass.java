@@ -7,6 +7,6 @@ public class MainClass {
         String path = "./data/data3_2.json";
         Cart cart = new Cart(index, path);
 
-        //cart.printAll();
+        cart.printAll();
     }
 }

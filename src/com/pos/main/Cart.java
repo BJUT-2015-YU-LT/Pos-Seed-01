@@ -138,12 +138,4 @@ public class Cart {
         return size*price;
     }
 
-    /**
-     * 获取索引列表
-     * @return
-     */
-    public Map<String, Item> getIndexList() {
-        return this.readIndex();
-    }
-
 }
