@@ -80,7 +80,7 @@ public class Cart {
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + Item.df.format(count) + "(元)\n");
+        System.out.println("总计：" + Item.df.format(count - reduce) + "(元)\n");
         System.out.println("节省："+ Item.df.format(reduce) +"(元)\n");
         System.out.println("**********************\n");
 
