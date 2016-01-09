@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class Cart {
 
-    private List<Item> colaList = new ArrayList<Item>();
-    private List<Item> spirteList = new ArrayList<Item>();
-    private List<Item> batterryList = new ArrayList<Item>();
+    private List<Item> colaList = new ArrayList<>();
+    private List<Item> spirteList = new ArrayList<>();
+    private List<Item> batterryList = new ArrayList<>();
 
     private Double count;
     private Double reduce;
@@ -87,6 +87,12 @@ public class Cart {
         return count - reduce;
     }
 
+    /**
+     * 分别打印商品总价
+     * @param size
+     * @param item
+     * @return
+     */
     public static Double print(int size, Item item) {
         String name = item.getName();
         String unit = item.getUnit();
