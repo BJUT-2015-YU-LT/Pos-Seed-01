@@ -19,12 +19,10 @@ public class CartTest {
 
     @Before
     public void setUp() throws Exception {
-        this.list = "./data/data3_1.json";
-        this.path = "./data/data3_2.json";
+        this.list = "./data/data4_1.json";
+        this.path = "./data/data4_2.json";
         this.cart = new Cart(list, path);
     }
-
-
 
     /**
      * 测试打印所有商品价格
@@ -32,7 +30,7 @@ public class CartTest {
      */
     @Test
     public void testPrintAll() throws Exception {
-        Double result = 23.00;
+        Double result = 3.00;
         assertEquals(result, this.cart.printAll());
     }
 
@@ -42,10 +40,13 @@ public class CartTest {
      */
     @Test
     public void testPrint() throws Exception {
-        Item item = new Item("电池", "个", 2.00, 1.0);
-        int size = 2;
-        Double result = size * 2.00;
-        assertEquals(result, this.cart.print(size, item));
+        Item itemDiscount = new Item("电池", "个", 2.00, 0.8, false);
+        Item itemPromotion = new Item("电池", "个", 2.00, 1.0, true);
+        int size = 3;
+        Double result1 = size * 2.00 * 0.8;
+        Double result2 = (size - 1) * 2.00;
+        assertEquals(result1, this.cart.print(size, itemDiscount));
+        assertEquals(result2, this.cart.print(size, itemPromotion));
     }
 
 }

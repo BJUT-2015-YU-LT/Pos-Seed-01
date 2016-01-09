@@ -4,6 +4,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -49,12 +50,12 @@ public class Cart {
 
             barcode = items.getString(i);
 
-            Item item = indexList.get(barcode);
+            Item item = this.indexList.get(barcode);
             name = item.getName();
 
-            if ( name.equals("可口可乐") ) colaList.add(item);
-            if ( name.equals("雪碧") ) spirteList.add(item);
-            if ( name.equals("电池") ) batterryList.add(item);
+            if ( name.equals("可口可乐") ) this.colaList.add(item);
+            if ( name.equals("雪碧") ) this.spirteList.add(item);
+            if ( name.equals("电池") ) this.batterryList.add(item);
         }
 
     }
@@ -68,6 +69,7 @@ public class Cart {
         String unit = "";
         Double price = 0.00;
         Double discount = 1.0;
+        boolean promotion = false;
 
         JSONObject objs = JSONObject.fromObject(this.list);
         Iterator iterator = objs.keys();
@@ -81,11 +83,13 @@ public class Cart {
             name = obj.getString("name");
             unit = obj.getString("unit");
             price = obj.getDouble("price");
-            Item item = new Item(name, unit, price, discount);
+            discount = obj.getDouble("discount");
+            promotion = obj.getBoolean("promotion");
+            Item item = new Item(name, unit, price, discount, promotion);
 
             this.indexList.put(key, item);
         }
-        return indexList;
+        return this.indexList;
     }
 
     /**
@@ -94,28 +98,28 @@ public class Cart {
      */
     public Double printAll() {
         System.out.println("***商店购物清单***");
-        if (colaList.size() > 0) {
-            Item item = colaList.get(0);
-            count += print(colaList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("打印时间：" + df.format(new Date()));
+
+        if (this.colaList.size() > 0) {
+            Item item = this.colaList.get(0);
+            this.count += print(this.colaList.size(), item);
         }
-        if (spirteList.size() > 0) {
-            Item item = spirteList.get(0);
-            count += print(spirteList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.spirteList.size() > 0) {
+            Item item = this.spirteList.get(0);
+            this.count += print(this.spirteList.size(), item);
         }
-        if (batterryList.size() > 0) {
-            Item item = batterryList.get(0);
-            count += print(batterryList.size(), item);
-            reduce = count - item.getDiscount()*count;
+        if (this.batterryList.size() > 0) {
+            Item item = this.batterryList.get(0);
+            this.count += print(this.batterryList.size(), item);
         }
 
         System.out.println("----------------------");
-        System.out.println("总计：" + Item.df.format(count - reduce) + "(元)\n");
-        System.out.println("节省："+ Item.df.format(reduce) +"(元)\n");
-        System.out.println("**********************\n");
+        System.out.println("总计：" + Item.df.format(this.count) + "(元)");
+        System.out.println("节省："+ Item.df.format(this.reduce) +"(元)");
+        System.out.println("**********************");
 
-        return count;
+        return this.reduce;
     }
 
     /**
@@ -124,18 +128,35 @@ public class Cart {
      * @param item
      * @return
      */
-    public static Double print(int size, Item item) {
+    public Double print(int size, Item item) {
         String name = item.getName();
         String unit = item.getUnit();
         Double price = item.getPrice();
         Double discount = item.getDiscount();
+        boolean promotion = item.getPromotion();
+        int couple = size / 2;
+        Double count = 0.00;
 
-        String result = "名称：" + name
-                + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
-                + "(元)，小计：" + Item.df.format(size * price * discount) + "(元)";
+        String result = "";
 
-        System.out.println(result);
-        return size*price;
+        if (promotion) {
+            count = (size - couple) * price;
+            result = "名称：" + name
+                    + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
+                    + "(元)，小计：" + Item.df.format(count) + "(元)";
+            this.reduce += couple * price;
+            System.out.println(result);
+            return count;
+        } else {
+            count = size * price * discount;
+            this.reduce += size * price * (1 - discount);
+            result = "名称：" + name
+                    + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
+                    + "(元)，小计：" + Item.df.format(count) + "(元)";
+            System.out.println(result);
+            return count;
+        }
+
     }
 
 }

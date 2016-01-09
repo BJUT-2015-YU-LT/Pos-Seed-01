@@ -11,6 +11,7 @@ public class Item {
     private String unit;
     private Double price;
     private Double discount;
+    private boolean promotion;
 
     static DecimalFormat df = new DecimalFormat( "0.00");
 
@@ -19,13 +20,15 @@ public class Item {
         this.setUnit(null);
         this.setPrice(0.00);
         this.setDiscount(1.0);
+        this.setPromotion(false);
     }
 
-    public Item(String name, String unit, Double price, Double discount) {
+    public Item(String name, String unit, Double price, Double discount, boolean promotion) {
         this.setName(name);
         this.setUnit(unit);
         this.setPrice(price);
         this.setDiscount(discount);
+        this.setPromotion(promotion);
     }
 
     /**
@@ -61,6 +64,14 @@ public class Item {
     }
 
     /**
+     * 获取 promotion
+     * @return
+     */
+    public boolean getPromotion() {
+        return this.promotion;
+    }
+
+    /**
      * 设置 name
      * @param name
      */
@@ -90,6 +101,14 @@ public class Item {
      */
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    /**
+     * 设置 promotion
+     * @param promotion
+     */
+    public void setPromotion(boolean promotion) {
+        this.promotion = promotion;
     }
 
 }
