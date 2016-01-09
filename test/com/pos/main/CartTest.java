@@ -15,7 +15,8 @@ public class CartTest {
 
     @Before
     public void setUp() throws Exception {
-        path = "./data/data1.json";
+        this.path = "./data/data1.json";
+        this.cart = new Cart(this.path);
     }
 
     /**
@@ -24,9 +25,8 @@ public class CartTest {
      */
     @Test
     public void testPrintAll() throws Exception {
-        cart = new Cart(path);
         Double result = 23.00;
-        assertEquals(result, cart.printAll());
+        assertEquals(result, this.cart.printAll());
     }
 
     /**
@@ -40,7 +40,7 @@ public class CartTest {
         Double price = 3.00;
         Double result = size*price;
 
-        assertEquals(result, cart.print(name, size, price));
+        assertEquals(result, this.cart.print(name, size, price));
     }
 }
 
