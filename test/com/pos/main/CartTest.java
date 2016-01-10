@@ -35,12 +35,11 @@ public class CartTest {
      */
     @Test
     public void testPrint() throws Exception {
-        String name = "可口可乐";
+        Item item = new Item("ITEM000000", "可口可乐", "瓶", 3.00);
         int size = 2;
-        Double price = 3.00;
-        Double result = size*price;
+        Double result = size*item.getPrice();
 
-        assertEquals(result, this.cart.print(name, size, price));
+        assertEquals(result, this.cart.print(size, item));
     }
 }
 

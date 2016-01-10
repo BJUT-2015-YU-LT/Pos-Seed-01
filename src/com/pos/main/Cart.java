@@ -61,15 +61,15 @@ public class Cart {
         System.out.println("***商店购物清单***");
         if (this.colaList.size() > 0) {
             Item item = this.colaList.get(0);
-            this.count += print(item.getName(), this.colaList.size(), item.getPrice());
+            this.count += print(this.colaList.size(), item);
         }
         if (this.spirteList.size() > 0) {
             Item item = this.spirteList.get(0);
-            this.count += print(item.getName(), this.spirteList.size(), item.getPrice());
+            this.count += print(this.spirteList.size(), item);
         }
         if (this.batterryList.size() > 0) {
             Item item = this.batterryList.get(0);
-            this.count += print(item.getName(), this.batterryList.size(), item.getPrice());
+            this.count += print(this.batterryList.size(), item);
         }
 
         System.out.println("----------------------");
@@ -80,17 +80,16 @@ public class Cart {
 
     /**
      * 分别打印输出商品信息
-     * @param name
      * @param size
-     * @param price
+     * @param item
      * @return
      */
-    public static Double print(String name, int size, Double price) {
-        String result = "名称：" + name
-                + "，数量：" + size + "瓶，单价：" + Item.df.format(price)
-                + "(元)，小计：" + Item.df.format(size * price) + "(元)";
+    public static Double print(int size, Item item) {
+        String result = "名称：" + item.getName()
+                + "，数量：" + size + item.getUnit() + "，单价：" + Item.df.format(item.getPrice())
+                + "(元)，小计：" + Item.df.format(size * item.getPrice()) + "(元)";
         System.out.println(result);
-        return size*price;
+        return size*item.getPrice();
     }
 
 }
