@@ -27,7 +27,7 @@ public class MySQLTable {
             + "(" + BARCODE + " VARCHAR(30) PRIMARY KEY ," + NAME
             + " VARCHAR(30) NOT NULL," + UNIT + " VARCHAR(30) NOT NULL,"
             + PRICE + " DOUBLE NOT NULL," + DISCOUNT + " DOUBLE ,"
-            + PROMOTION + " INTEGER );";
+            + PROMOTION + " BOOLEAN );";
 
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;
 

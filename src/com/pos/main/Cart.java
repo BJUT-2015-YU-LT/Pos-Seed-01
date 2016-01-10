@@ -126,12 +126,10 @@ public class Cart {
             System.out.println("名称：可口可乐，数量：" + (colaNum / 2) + item.getUnit());
         }
         if (spirteNum / 2 > 0) {
-            Item item = this.spirteList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (spirteNum / 2) + item.getUnit());
+
         }
         if (batterryNum / 2 > 0) {
-            Item item = this.batterryList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (batterryNum / 2) + item.getUnit());
+
         }
 
         System.out.println("----------------------");
