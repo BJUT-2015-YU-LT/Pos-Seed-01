@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="MySQL - pos@localhost" uuid="f10b17e3-01e8-45fb-bfff-701b7d3a4148">
-      <secret-storage>master_key</secret-storage>
-      <user-name>homestead</user-name>
-      <schema-pattern>pos.*</schema-pattern>
-      <default-schemas>pos.*</default-schemas>
-    </data-source>
+    <data-source name="MySQL - pos@localhost" uuid="f10b17e3-01e8-45fb-bfff-701b7d3a4148" />
   </component>
 </project>
