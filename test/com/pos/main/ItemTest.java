@@ -16,12 +16,16 @@ public class ItemTest {
      */
     @Test
     public void testGetMethod() throws Exception {
-        Double price = 3.0;
-        Item item = new Item("ITEM000000", "可口可乐", "瓶", price);
-        assertEquals("ITEM000000", item.getBarcode());
+        Double price = 3.00;
+        Double discount = 0.8;
+        boolean promotion = true;
+        Item item = new Item("可口可乐", "瓶", price, discount, promotion);
+
         assertEquals("可口可乐", item.getName());
         assertEquals("瓶", item.getUnit());
         assertEquals(price, item.getPrice());
+        assertEquals(discount, item.getDiscount());
+        assertEquals(promotion, item.getPromotion());
     }
 
     /**
@@ -30,15 +34,21 @@ public class ItemTest {
      */
     @Test
     public void testSetMethod() throws Exception {
-        Double price = 3.0;
+        Double price = 3.00;
+        Double discount = 0.8;
+        boolean promotion = true;
+
         Item item = new Item();
-        item.setBarcode("ITEM000000");
         item.setName("可口可乐");
         item.setUnit("瓶");
         item.setPrice(price);
-        assertEquals("ITEM000000", item.getBarcode());
+        item.setDiscount(discount);
+        item.setPromotion(promotion);
+
         assertEquals("可口可乐", item.getName());
         assertEquals("瓶", item.getUnit());
         assertEquals(price, item.getPrice());
+        assertEquals(discount, item.getDiscount());
+        assertEquals(promotion, item.getPromotion());
     }
 }

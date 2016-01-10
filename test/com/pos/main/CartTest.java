@@ -3,6 +3,9 @@ package com.pos.main;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,22 +14,24 @@ import static org.junit.Assert.*;
 public class CartTest {
 
     private Cart cart;
+    private String list;
     private String path;
 
     @Before
     public void setUp() throws Exception {
-        path = "./data/data1.json";
+        this.list = "./data/data4_1.json";
+        this.path = "./data/data4_2.json";
+        this.cart = new Cart(list, path);
     }
 
     /**
-     * 测试打印所有商品价格
+     * 测试所有商品节省的价钱
      * @throws Exception
      */
     @Test
     public void testPrintAll() throws Exception {
-        cart = new Cart(path);
-        Double result = 23.0;
-        assertEquals(result, cart.printAll());
+        Double result = 3.00;
+        assertEquals(result, this.cart.printAll());
     }
 
     /**
@@ -35,12 +40,14 @@ public class CartTest {
      */
     @Test
     public void testPrint() throws Exception {
-        String name = "可口可乐";
-        int size = 2;
-        Double price = 3.0;
-        Double result = size*price;
-
-        assertEquals(result, cart.print(name, size, price));
+        Item itemDiscount = new Item("电池", "个", 2.00, 0.8, false);
+        Item itemPromotion = new Item("电池", "个", 2.00, 1.0, true);
+        int size = 3;
+        Double result1 = size * 2.00 * 0.8;
+        Double result2 = (size - 1) * 2.00;
+        assertEquals(result1, this.cart.print(size, itemDiscount));
+        assertEquals(result2, this.cart.print(size, itemPromotion));
     }
+
 }
 

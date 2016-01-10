@@ -1,36 +1,34 @@
 package com.pos.main;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by pengzhendong on 16/1/6.
  */
 public class Item {
-    
-    private String barcode;
+
     private String name;
     private String unit;
     private Double price;
+    private Double discount;
+    private boolean promotion;
+
+    static DecimalFormat df = new DecimalFormat( "0.00");
 
     public Item() {
-        this.setBarcode(null);
         this.setName(null);
         this.setUnit(null);
-        this.setPrice(0.0);
+        this.setPrice(0.00);
+        this.setDiscount(1.0);
+        this.setPromotion(false);
     }
 
-    public Item(String barcode, String name, String unit, Double price) {
-        this.setBarcode(barcode);
+    public Item(String name, String unit, Double price, Double discount, boolean promotion) {
         this.setName(name);
         this.setUnit(unit);
         this.setPrice(price);
-    }
-
-    /**
-     * 获取 barcode
-     * @return
-     */
-    public String getBarcode() {
-
-        return this.barcode;
+        this.setDiscount(discount);
+        this.setPromotion(promotion);
     }
 
     /**
@@ -58,11 +56,19 @@ public class Item {
     }
 
     /**
-     * 设置 barcode
-     * @param barcode
+     * 获取 discount
+     * @return
      */
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public Double getDiscount() {
+        return this.discount;
+    }
+
+    /**
+     * 获取 promotion
+     * @return
+     */
+    public boolean getPromotion() {
+        return this.promotion;
     }
 
     /**
@@ -89,5 +95,20 @@ public class Item {
         this.price = price;
     }
 
+    /**
+     * 设置 discount
+     * @param discount
+     */
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    /**
+     * 设置 promotion
+     * @param promotion
+     */
+    public void setPromotion(boolean promotion) {
+        this.promotion = promotion;
+    }
 
 }
