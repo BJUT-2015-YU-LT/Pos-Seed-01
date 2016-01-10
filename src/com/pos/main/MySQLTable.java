@@ -1,7 +1,5 @@
 package com.pos.main;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
