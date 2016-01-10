@@ -9,5 +9,6 @@ public class MainClass {
         Cart cart = new Cart(index, path);
 
         cart.printAll();
+        MySQLTable.onUpgrade();
     }
 }

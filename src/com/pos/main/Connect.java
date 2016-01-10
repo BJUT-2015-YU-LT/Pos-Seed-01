@@ -7,7 +7,7 @@ import java.sql.SQLException;
 /**
  * Created by pengzhendong on 16/1/9.
  */
-public class MySQL {
+public class Connect {
 
     Env env =  new Env();
     String driver = env.getProperty("DRIVER");
@@ -16,7 +16,7 @@ public class MySQL {
     String password =env.getProperty("PASSWORD");
     public Connection conn;
 
-    public MySQL() {
+    public Connect() {
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {

@@ -10,14 +10,14 @@ import static org.junit.Assert.*;
 /**
  * Created by pengzhendong on 16/1/10.
  */
-public class MySQLTest {
+public class ConnectTest {
 
-    private MySQL mySQL;
+    private Connect connect;
     private Connection conn;
 
     @Before
     public void setUp() throws Exception {
-        this.mySQL = new MySQL();
+        this.connect = new Connect();
     }
 
     /**
@@ -26,8 +26,8 @@ public class MySQLTest {
      */
     @Test
     public void testConnect() throws Exception {
-        this.conn = mySQL.conn;
-        assertNotNull(this.conn);
+        this.conn = connect.conn;
+        assertEquals(false, conn.isClosed());
     }
 
 }
