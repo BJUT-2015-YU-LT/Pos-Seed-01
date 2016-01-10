@@ -1,9 +1,11 @@
 package com.pos.main;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -12,84 +14,99 @@ import java.util.*;
  */
 public class Cart {
 
-    private static Map<String, Item> indexList = new HashMap<>();
+    private List<String> itemsList = new ArrayList<>();
 
-    private List<Item> colaList = new ArrayList<>();
-    private List<Item> spirteList = new ArrayList<>();
-    private List<Item> batterryList = new ArrayList<>();
+    private static final String colaBar = "ITEM000000";
+    private static final String spirteBar = "ITEM000001";
+    private static final String batterryBar = "ITEM000004";
+
+    private int colaNum = 0;
+    private int spirteNum = 0;
+    private int batterryNum = 0;
+
+    private int freeCola = 0;
+    private int freeSpirte = 0;
+    private int freeBatterry = 0;
+
+    private Item cola;
+    private Item spirte;
+    private Item batterry;
 
     private Double count;
     private Double reduce;
-    private String list = "";
+
+    private static Connection conn = null;
+    private static Statement smt = null;
 
     /**
      * 构造函数, 将 Json 解析成对象,存到 list 中
      * @param path
      */
-    public Cart(String index, String path) {
+    public Cart(String path) {
         this.count = 0.00;
         this.reduce = 0.00;
 
-        String barcode= "";
-        String name = "";
-
-        String result ="";
+        String barcode = "";
+        String result = "";
 
         try {
-            this.list = ReadFile.ReadFile(index);
             result = ReadFile.ReadFile(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.readIndex();
 
         JSONArray items = JSONArray.fromObject(result);
 
         for (int i = 0; i < items.size(); i++) {
 
             barcode = items.getString(i);
-
-            Item item = this.indexList.get(barcode);
-            name = item.getName();
-
-            if ( name.equals("可口可乐") ) this.colaList.add(item);
-            if ( name.equals("雪碧") ) this.spirteList.add(item);
-            if ( name.equals("电池") ) this.batterryList.add(item);
+            if (barcode.equals(colaBar)) this.colaNum++;
+            if (barcode.equals(spirteBar)) this.spirteNum++;
+            if (barcode.equals(batterryBar)) this.batterryNum++;
         }
+        queryDataBase(colaBar);
+        queryDataBase(spirteBar);
+        queryDataBase(batterryBar);
 
     }
 
     /**
-     * 读取索引文件
-     * @return
+     * 根据 barcode 查询商品信息
+     * @param barcode
      */
-    public Map<String, Item> readIndex() {
+    public void queryDataBase (String barcode) {
+        Connection conn = new Connect().conn;
+        Statement smt = null;
+        ResultSet rs = null;
         String name = "";
         String unit = "";
         Double price = 0.00;
         Double discount = 1.0;
         boolean promotion = false;
 
-        JSONObject objs = JSONObject.fromObject(this.list);
-        Iterator iterator = objs.keys();
-        String key = "";
+        String querySql = "select * from items where `barcode` = '" + barcode + "';";
 
-        while (iterator.hasNext()) {
-            key = (String) iterator.next();
+        try {
+            smt = conn.createStatement();
+            rs = smt.executeQuery(querySql);
 
-            JSONObject obj = JSONObject.fromObject(objs.getString(key));
+            while(rs.next())
+            {
+                name = rs.getString("name");
+                unit = rs.getString("unit");
+                price = rs.getDouble("price");
+                discount = rs.getDouble("discount");
+                promotion = rs.getBoolean("promotion");
+                if (barcode.equals(colaBar)) cola = new Item(name, unit, price, discount, promotion);
+                if (barcode.equals(spirteBar)) spirte = new Item(name, unit, price, discount, promotion);
+                if (barcode.equals(batterryBar)) batterry = new Item(name, unit, price, discount, promotion);
+            }
 
-            name = obj.getString("name");
-            unit = obj.getString("unit");
-            price = obj.getDouble("price");
-            discount = obj.getDouble("discount");
-            promotion = obj.getBoolean("promotion");
-            Item item = new Item(name, unit, price, discount, promotion);
-
-            this.indexList.put(key, item);
+            rs.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return this.indexList;
     }
 
     /**
@@ -97,9 +114,6 @@ public class Cart {
      * @return
      */
     public Double printAll() {
-        int colaNum = this.colaList.size();
-        int spirteNum = this.spirteList.size();
-        int batterryNum = this.batterryList.size();
 
         System.out.println("***商店购物清单***");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -107,39 +121,56 @@ public class Cart {
         System.out.println("----------------------");
 
         if (colaNum > 0) {
-            Item item = this.colaList.get(0);
-            this.count += print(colaNum, item);
+            this.count += print(colaNum, cola);
         }
         if (spirteNum > 0) {
-            Item item = this.spirteList.get(0);
-            this.count += print(spirteNum, item);
+            this.count += print(spirteNum, spirte);
         }
         if (batterryNum > 0) {
-            Item item = this.batterryList.get(0);
-            this.count += print(batterryNum, item);
+            this.count += print(batterryNum, batterry);
         }
         System.out.println("----------------------");
         System.out.println("挥泪赠送商品：");
 
-        if (colaNum / 2 > 0) {
-            Item item = this.colaList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (colaNum / 2) + item.getUnit());
+        if (cola.getPromotion() && (freeCola = colaNum / 2) > 0) {
+            System.out.println("名称：" + cola.getName() + "，数量：" + freeCola + cola.getUnit());
         }
-        if (spirteNum / 2 > 0) {
-            Item item = this.spirteList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (spirteNum / 2) + item.getUnit());
+        if (spirte.getPromotion() && (freeSpirte = spirteNum / 2) > 0) {
+            System.out.println("名称：" + spirte.getName() + "，数量：" + freeSpirte + spirte.getUnit());
         }
-        if (batterryNum / 2 > 0) {
-            Item item = this.batterryList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (batterryNum / 2) + item.getUnit());
+        if (batterry.getPromotion() && (freeBatterry = batterryNum / 2) > 0) {
+            System.out.println("名称：" + batterry.getName() + "，数量：" + freeBatterry + batterry.getUnit());
         }
 
         System.out.println("----------------------");
         System.out.println("总计：" + Item.df.format(this.count) + "(元)");
-        System.out.println("节省："+ Item.df.format(this.reduce) +"(元)");
+        System.out.println("节省："+ Item.df.format(this.reduce) + "(元)");
         System.out.println("**********************");
 
+        this.addToDataBase();
         return this.reduce;
+    }
+
+    public void addToDataBase() {
+        this.conn = new Connect().conn;
+
+        String InsertSql =  "INSERT INTO logs( cola, spirte, batterry, freecola, freespirte, freebatterry, "
+                + "count, reduce ) VALUES ( "
+                + this.colaNum + ", " + this.spirteNum + ", " + this.batterryNum + ", "
+                + this.freeCola + ", " + this.freeSpirte + ", " + this.freeBatterry + ", "
+                + this.count + ", " + this.reduce + " );";
+
+        try {
+            this.smt = conn.createStatement();
+            this.smt.executeUpdate(InsertSql);
+        } catch (SQLException e) {
+            System.out.println("插入数据失败!");
+        }
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -176,7 +207,6 @@ public class Cart {
             System.out.println(result);
             return count;
         }
-
     }
 
 }
