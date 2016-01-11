@@ -29,8 +29,8 @@ public class CartTest {
      */
     @Test
     public void testPrintAll() throws Exception {
-        Double result = 3.00;
-        //assertEquals(result, this.cart.printAll());
+        Double result = 4.80;
+        assertEquals(result, this.cart.printAll());
     }
 
     /**
