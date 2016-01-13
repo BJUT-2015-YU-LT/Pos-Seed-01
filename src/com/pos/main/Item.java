@@ -15,6 +15,7 @@ public class Item {
     private Double vipDiscount;
 
     static DecimalFormat df = new DecimalFormat( "0.00");
+    static DecimalFormat vip = new DecimalFormat( "0");
 
     public Item() {
         this.setName(null);

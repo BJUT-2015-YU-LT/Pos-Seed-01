@@ -1,14 +1,17 @@
 {
   "USER0001": {
     "name": "USER 001",
+    "points": 0,
     "isVip": true
   },
   "USER0002": {
     "name": "USER 002",
+    "points": 0,
     "isVip": false
   },
   "USER0003": {
     "name": "USER 003",
+    "points": 0,
     "isVip": true
   }
 }

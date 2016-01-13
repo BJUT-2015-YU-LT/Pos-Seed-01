@@ -18,11 +18,15 @@ public class Cart {
     private List<Item> spirteList = new ArrayList<>();
     private List<Item> batterryList = new ArrayList<>();
 
-    private String user = "";
-    private int points = 0;
+    private User user = new User();
+    private String userID = "";
     private Double count;
     private Double reduce;
     private String list = "";
+
+    private int freeCola = 0;
+    private int freeSpirte = 0;
+    private int freeBatterry = 0;
 
     /**
      * 构造函数, 将 Json 解析成对象,存到 list 中
@@ -33,7 +37,7 @@ public class Cart {
         this.reduce = 0.00;
 
         String barcode= "";
-        String name = "";
+        String itemName = "";
 
         String result ="";
 
@@ -47,22 +51,20 @@ public class Cart {
         this.readIndex();
 
         JSONObject obj = JSONObject.fromObject(result);
-        Iterator iterator = obj.keys();
-        String key = "";
+        userID = obj.getString("user");
+        user = User.readUser(userID);
 
-        this.user = obj.getString("user");
         JSONArray items = JSONArray.fromObject(obj.getString("items"));
 
         for (int i = 0; i < items.size(); i++) {
-
             barcode = items.getString(i);
 
             Item item = this.indexList.get(barcode);
-            name = item.getName();
+            itemName = item.getName();
 
-            if ( name.equals("可口可乐") ) this.colaList.add(item);
-            if ( name.equals("雪碧") ) this.spirteList.add(item);
-            if ( name.equals("电池") ) this.batterryList.add(item);
+            if ( itemName.equals("可口可乐") ) this.colaList.add(item);
+            if ( itemName.equals("雪碧") ) this.spirteList.add(item);
+            if ( itemName.equals("电池") ) this.batterryList.add(item);
         }
 
     }
@@ -110,7 +112,6 @@ public class Cart {
             }
 
             Item item = new Item(name, unit, price, discount, promotion, vipDiscount);
-
             this.indexList.put(key, item);
         }
         return this.indexList;
@@ -127,11 +128,11 @@ public class Cart {
 
         if (colaNum > 0) {
             Item item = this.colaList.get(0);
-            this.count += count(colaNum, item);
+            this.count +=count(colaNum, item);
         }
         if (spirteNum > 0) {
             Item item = this.spirteList.get(0);
-            this.count += count(spirteNum, item);
+            this.count +=count(spirteNum, item);
         }
         if (batterryNum > 0) {
             Item item = this.batterryList.get(0);
@@ -139,7 +140,12 @@ public class Cart {
         }
 
         System.out.println("***商店购物清单***");
-        System.out.println("会员编号：" + user + "\t" + "会员积分：" + points + "分");
+
+        if (this.user.getIsVip()) {
+            this.user = User.addPoints(this.user, this.count);
+            System.out.println("会员编号：" + userID + "    " + "会员积分：" + this.user.getPoints() + "分");
+        }
+
         System.out.println("----------------------");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("打印时间：" + df.format(new Date()));
@@ -158,9 +164,6 @@ public class Cart {
             print(batterryNum, item);
         }
 
-        int freeCola = colaNum / 3;
-        int freeSpirte = spirteNum / 3;
-        int freeBatterry = batterryNum / 3;
         if (freeCola > 0 || freeSpirte > 0 || freeBatterry > 0) {
             System.out.println("----------------------");
             System.out.println("挥泪赠送商品：");
@@ -194,10 +197,11 @@ public class Cart {
      * @return
      */
     public Double count(int size, Item item) {
+
         Double price = item.getPrice();
         Double discount = item.getDiscount();
         boolean promotion = item.getPromotion();
-        Double vipDiscount = item.getVipDiscount();
+        Double vipDiscount = (this.user.getIsVip()) ? item.getVipDiscount() : 1.0;
         int couple = size / 2;
         Double count = 0.00;
 
@@ -222,13 +226,17 @@ public class Cart {
         Double price = item.getPrice();
         Double discount = item.getDiscount();
         boolean promotion = item.getPromotion();
-        Double vipDiscount = item.getVipDiscount();
+        Double vipDiscount = (this.user.getIsVip()) ? item.getVipDiscount() : 1.0;
         int couple = size / 2;
         Double count = 0.00;
 
         String result = "";
 
         if (promotion) {
+            if (name.equals("可口可乐")) this.freeCola += couple;
+            if (name.equals("雪碧")) this.freeSpirte += couple;
+            if (name.equals("电池")) this.freeBatterry += couple;
+
             count = (size - couple) * price;
             result = "名称：" + name
                     + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)

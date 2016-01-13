@@ -1,8 +1,11 @@
 {
-  "user": "USER001",
+  "user": "USER0001",
   "items": [
     "ITEM000000",
+    "ITEM000000",
     "ITEM000001",
-    "ITEM000001"
+    "ITEM000003",
+    "ITEM000003",
+    "ITEM000003"
   ]
 }
