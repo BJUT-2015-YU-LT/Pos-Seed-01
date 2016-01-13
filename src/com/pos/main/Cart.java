@@ -110,23 +110,9 @@ public class Cart {
             name = obj.getString("name");
             unit = obj.getString("unit");
             price = obj.getDouble("price");
-            try {
-                discount = obj.getDouble("discount");
-            } catch (net.sf.json.JSONException e) {
-                discount = 1.0;
-            }
-
-            try {
-                promotion = obj.getBoolean("promotion");
-            } catch (net.sf.json.JSONException e) {
-                promotion = false;
-            }
-
-            try {
-                vipDiscount = obj.getDouble("vipDiscount");
-            } catch (net.sf.json.JSONException e) {
-                vipDiscount = 1.0;
-            }
+            if (obj.containsKey("discount")) discount = obj.getDouble("discount");
+            if (obj.containsKey("promotion")) promotion = obj.getBoolean("promotion");
+            if (obj.containsKey("vipDiscount")) vipDiscount = obj.getDouble("vipDiscount");
 
             Item item = new Item(name, unit, price, discount, promotion, vipDiscount);
 
