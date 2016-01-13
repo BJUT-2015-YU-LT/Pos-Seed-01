@@ -19,6 +19,7 @@ public class Cart {
     private List<Item> batterryList = new ArrayList<>();
 
     private String user = "";
+    private boolean isVip = false;
     private Double count;
     private Double reduce;
     private String list = "";
@@ -46,11 +47,11 @@ public class Cart {
         this.readIndex();
 
         JSONObject obj = JSONObject.fromObject(result);
-        Iterator iterator = obj.keys();
-        String key = "";
-
         this.user = obj.getString("user");
+        this.isVip = this.readVip(user);
+
         JSONArray items = JSONArray.fromObject(obj.getString("items"));
+
 
         for (int i = 0; i < items.size(); i++) {
 
@@ -64,6 +65,25 @@ public class Cart {
             if ( name.equals("电池") ) this.batterryList.add(item);
         }
 
+    }
+
+    /**
+     * 读取会员信息
+     * @param user
+     * @return
+     */
+    public boolean  readVip(String user) {
+        String result ="";
+
+        try {
+            result = ReadFile.ReadFile("./data/vip.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JSONObject obj = JSONObject.fromObject(result);
+        JSONObject info = JSONObject.fromObject(obj.getString(user));
+
+        return info.getBoolean("isVip");
     }
 
     /**
@@ -183,7 +203,7 @@ public class Cart {
         Double price = item.getPrice();
         Double discount = item.getDiscount();
         boolean promotion = item.getPromotion();
-        Double vipDiscount = item.getVipDiscount();
+        Double vipDiscount = (this.isVip) ? item.getVipDiscount() : 1.0;
         int couple = size / 2;
         Double count = 0.00;
 
