@@ -15,11 +15,9 @@ public class UserTest {
      */
     @Test
     public void testReadUser() throws Exception {
-        String name = "USER 001";
+        String id = "USER0001";
         boolean isVip = true;
-        User user = User.readUser(name);
-
-        assertEquals(name, user.getName());
+        User user = User.readUser(id);
         assertEquals(isVip, user.getIsVip());
     }
 
