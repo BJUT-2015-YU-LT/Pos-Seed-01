@@ -1,6 +1,8 @@
 package com.pos.main;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,22 +20,20 @@ public class Cart {
 
     private static final String colaBar = "ITEM000000";
     private static final String spirteBar = "ITEM000001";
-    private static final String batterryBar = "ITEM000004";
-
-    private int colaNum = 0;
-    private int spirteNum = 0;
-    private int batterryNum = 0;
-
-    private int freeCola = 0;
-    private int freeSpirte = 0;
-    private int freeBatterry = 0;
+    private static final String batterryBar = "ITEM000003";
 
     private Item cola;
     private Item spirte;
     private Item batterry;
 
-    private Double count;
-    private Double reduce;
+    private int colaNum = 0;
+    private int spirteNum = 0;
+    private int batterryNum = 0;
+
+    private User user = new User();
+    private String userID = "";
+    private Double count = 0.00;
+    private Double reduce = 0.00;
 
     private static Connection conn = null;
     private static Statement smt = null;
@@ -43,9 +43,6 @@ public class Cart {
      * @param path
      */
     public Cart(String path) {
-        this.count = 0.00;
-        this.reduce = 0.00;
-
         String barcode = "";
         String result = "";
 
@@ -55,91 +52,68 @@ public class Cart {
             e.printStackTrace();
         }
 
-        JSONArray items = JSONArray.fromObject(result);
+        JSONObject obj = JSONObject.fromObject(result);
+        this.userID = obj.getString("user");
+        this.user = MySQLOperate.queryUser(userID);
+
+        JSONArray items = JSONArray.fromObject(obj.getString("items"));
 
         for (int i = 0; i < items.size(); i++) {
-
             barcode = items.getString(i);
-            if (barcode.equals(colaBar)) this.colaNum++;
-            if (barcode.equals(spirteBar)) this.spirteNum++;
-            if (barcode.equals(batterryBar)) this.batterryNum++;
+
+            if (barcode.equals(this.colaBar)) this.colaNum++;
+            if (barcode.equals(this.spirteBar)) this.spirteNum++;
+            if (barcode.equals(this.batterryBar)) this.batterryNum++;
         }
-        queryDataBase(colaBar);
-        queryDataBase(spirteBar);
-        queryDataBase(batterryBar);
-
-    }
-
-    /**
-     * 根据 barcode 查询商品信息
-     * @param barcode
-     */
-    public void queryDataBase (String barcode) {
-        Connection conn = new Connect().conn;
-        Statement smt = null;
-        ResultSet rs = null;
-        String name = "";
-        String unit = "";
-        Double price = 0.00;
-        Double discount = 1.0;
-        boolean promotion = false;
-
-        String querySql = "select * from items where `barcode` = '" + barcode + "';";
-
-        try {
-            smt = conn.createStatement();
-            rs = smt.executeQuery(querySql);
-
-            while(rs.next())
-            {
-                name = rs.getString("name");
-                unit = rs.getString("unit");
-                price = rs.getDouble("price");
-                discount = rs.getDouble("discount");
-                promotion = rs.getBoolean("promotion");
-                if (barcode.equals(colaBar)) cola = new Item(name, unit, price, discount, promotion);
-                if (barcode.equals(spirteBar)) spirte = new Item(name, unit, price, discount, promotion);
-                if (barcode.equals(batterryBar)) batterry = new Item(name, unit, price, discount, promotion);
-            }
-
-            rs.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.cola = MySQLOperate.queryDataBase(this.colaBar);
+        this.spirte = MySQLOperate.queryDataBase(this.spirteBar);
+        this.batterry = MySQLOperate.queryDataBase(this.batterryBar);
     }
 
     /**
      * 打印各类商品总价
      * @return
      */
-    public Double printAll() {
+    public boolean printAll() {
+
+        if (colaNum > 0) {
+            this.count += this.count(this.colaNum, this.cola);
+        }
+        if (spirteNum > 0) {
+            this.count += this.count(this.spirteNum, this.spirte);
+        }
+        if (batterryNum > 0) {
+            this.count += this.count(this.batterryNum, this.batterry);
+        }
+
+        this.user = User.addPoints(this.user, this.count);
+        MySQLOperate.updatePoints(userID, user.getPoints());
 
         System.out.println("***商店购物清单***");
+        System.out.println("会员编号：" + this.userID + "    " + "会员积分：" + user.getPoints() +"分");
+        System.out.println("----------------------");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("打印时间：" + df.format(new Date()));
         System.out.println("----------------------");
 
-        if (colaNum > 0) {
-            this.count += print(colaNum, cola);
+        if (this.cola.getPromotion() && this.colaNum / 3 > 0) {
+            System.out.println("名称：" + this.cola.getName() + "，数量：" + this.colaNum / 3 + this.cola.getUnit());
         }
-        if (spirteNum > 0) {
-            this.count += print(spirteNum, spirte);
+        if (this.spirte.getPromotion() && this.spirteNum / 3 > 0) {
+            System.out.println("名称：" + this.spirte.getName() + "，数量：" + this.spirteNum / 3 + this.spirte.getUnit());
         }
-        if (batterryNum > 0) {
-            this.count += print(batterryNum, batterry);
+        if (this.batterry.getPromotion() && this.batterryNum / 3 > 0) {
+            System.out.println("名称：" + this.batterry.getName() + "，数量：" + this.batterryNum / 3 + this.batterry.getUnit());
         }
-        System.out.println("----------------------");
-        System.out.println("挥泪赠送商品：");
 
-        if (cola.getPromotion() && (freeCola = colaNum / 2) > 0) {
-            System.out.println("名称：" + cola.getName() + "，数量：" + freeCola + cola.getUnit());
+        if (this.colaNum > 0) {
+            this.print(this.colaNum, this.cola);
         }
-        if (spirte.getPromotion() && (freeSpirte = spirteNum / 2) > 0) {
-            System.out.println("名称：" + spirte.getName() + "，数量：" + freeSpirte + spirte.getUnit());
+        if (this.spirteNum > 0) {
+            this.print(this.spirteNum, this.spirte);
         }
-        if (batterry.getPromotion() && (freeBatterry = batterryNum / 2) > 0) {
-            System.out.println("名称：" + batterry.getName() + "，数量：" + freeBatterry + batterry.getUnit());
+        if (this.batterryNum > 0) {
+            this.print(this.batterryNum, this.batterry);
         }
 
         System.out.println("----------------------");
@@ -147,18 +121,20 @@ public class Cart {
         System.out.println("节省："+ Item.df.format(this.reduce) + "(元)");
         System.out.println("**********************");
 
-        this.addToDataBase();
-        return this.reduce;
+        this.addToLog();
+        return true;
     }
 
-    public void addToDataBase() {
+    /**
+     * 想数据库中添加一条数据
+     */
+    public void addToLog() {
         this.conn = new Connect().conn;
 
-        String InsertSql =  "INSERT INTO logs( cola, spirte, batterry, freecola, freespirte, freebatterry, "
-                + "count, reduce ) VALUES ( "
-                + this.colaNum + ", " + this.spirteNum + ", " + this.batterryNum + ", "
-                + this.freeCola + ", " + this.freeSpirte + ", " + this.freeBatterry + ", "
-                + this.count + ", " + this.reduce + " );";
+        String InsertSql =  "INSERT INTO logs ( user_id, cola, spirte, batterry, count, reduce ) VALUES ( "
+                + "\"" + this.userID + "\", " + this.colaNum + ", " + this.spirteNum + ", "
+                + this.batterryNum + ", " + Item.df.format(this.count) + ", "
+                + Item.df.format(this.reduce) + " );";
 
         try {
             this.smt = conn.createStatement();
@@ -174,6 +150,29 @@ public class Cart {
     }
 
     /**
+     * 计算总价
+     * @param size
+     * @param item
+     * @return
+     */
+    public Double count(int size, Item item) {
+
+        Double price = item.getPrice();
+        Double discount = item.getDiscount();
+        boolean promotion = item.getPromotion();
+        Double vipDiscount = (this.user.getIsVip()) ? item.getVipDiscount() : 1.0;
+        int couple = size / 3;
+        Double count = 0.00;
+
+        if (promotion) {
+            count = (size - couple) * price;
+        } else {
+            count = size * price * discount * vipDiscount;
+        }
+        return count;
+    }
+
+    /**
      * 分别打印商品总价
      * @param size
      * @param item
@@ -185,7 +184,8 @@ public class Cart {
         Double price = item.getPrice();
         Double discount = item.getDiscount();
         boolean promotion = item.getPromotion();
-        int couple = size / 2;
+        Double vipDiscount = (this.user.getIsVip()) ? item.getVipDiscount() : 1.0;
+        int couple = size / 3;
         Double count = 0.00;
 
         String result = "";
@@ -197,16 +197,14 @@ public class Cart {
                     + "(元)，小计：" + Item.df.format(count) + "(元)";
             this.reduce += couple * price;
             System.out.println(result);
-            return count;
         } else {
-            count = size * price * discount;
-            this.reduce += size * price * (1 - discount);
+            count = size * price * discount * vipDiscount;
+            this.reduce += size * price * (1 - discount * vipDiscount);
             result = "名称：" + name
                     + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
                     + "(元)，小计：" + Item.df.format(count) + "(元)";
             System.out.println(result);
-            return count;
         }
+        return count;
     }
-
 }

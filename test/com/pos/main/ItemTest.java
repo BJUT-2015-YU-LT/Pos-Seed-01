@@ -19,13 +19,15 @@ public class ItemTest {
         Double price = 3.00;
         Double discount = 0.8;
         boolean promotion = true;
-        Item item = new Item("可口可乐", "瓶", price, discount, promotion);
+        Double vipDiscount = 0.8;
+        Item item = new Item("可口可乐", "瓶", price, discount, promotion, vipDiscount);
 
         assertEquals("可口可乐", item.getName());
         assertEquals("瓶", item.getUnit());
         assertEquals(price, item.getPrice());
         assertEquals(discount, item.getDiscount());
         assertEquals(promotion, item.getPromotion());
+        assertEquals(vipDiscount, item.getVipDiscount());
     }
 
     /**
@@ -37,6 +39,7 @@ public class ItemTest {
         Double price = 3.00;
         Double discount = 0.8;
         boolean promotion = true;
+        Double vipDiscount = 1.0;
 
         Item item = new Item();
         item.setName("可口可乐");
@@ -50,5 +53,6 @@ public class ItemTest {
         assertEquals(price, item.getPrice());
         assertEquals(discount, item.getDiscount());
         assertEquals(promotion, item.getPromotion());
+        assertEquals(vipDiscount, item.getVipDiscount());
     }
 }
