@@ -83,8 +83,8 @@ public class Cart {
             name = obj.getString("name");
             unit = obj.getString("unit");
             price = obj.getDouble("price");
-            discount = obj.getDouble("discount");
-            promotion = obj.getBoolean("promotion");
+            if (obj.containsKey("discount")) discount = obj.getDouble("discount");
+            if (obj.containsKey("promotion")) promotion = obj.getBoolean("promotion");
             Item item = new Item(name, unit, price, discount, promotion);
 
             this.indexList.put(key, item);
