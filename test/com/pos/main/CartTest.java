@@ -19,8 +19,8 @@ public class CartTest {
 
     @Before
     public void setUp() throws Exception {
-        this.list = "./data/data5_1.json";
-        this.path = "./data/data5_2.json";
+        this.list = "./data/data5_6_1.json";
+        this.path = "./data/data5_6_2.json";
         this.cart = new Cart(list, path);
     }
 

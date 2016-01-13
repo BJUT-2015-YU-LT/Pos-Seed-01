@@ -19,6 +19,7 @@ public class Cart {
     private List<Item> batterryList = new ArrayList<>();
 
     private String user = "";
+    private int points = 0;
     private Double count;
     private Double reduce;
     private String list = "";
@@ -124,22 +125,37 @@ public class Cart {
         int spirteNum = this.spirteList.size();
         int batterryNum = this.batterryList.size();
 
+        if (colaNum > 0) {
+            Item item = this.colaList.get(0);
+            this.count += count(colaNum, item);
+        }
+        if (spirteNum > 0) {
+            Item item = this.spirteList.get(0);
+            this.count += count(spirteNum, item);
+        }
+        if (batterryNum > 0) {
+            Item item = this.batterryList.get(0);
+            this.count += count(batterryNum, item);
+        }
+
         System.out.println("***商店购物清单***");
+        System.out.println("会员编号：" + user + "\t" + "会员积分：" + points + "分");
+        System.out.println("----------------------");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("打印时间：" + df.format(new Date()));
         System.out.println("----------------------");
 
         if (colaNum > 0) {
             Item item = this.colaList.get(0);
-            this.count += print(colaNum, item);
+            print(colaNum, item);
         }
         if (spirteNum > 0) {
             Item item = this.spirteList.get(0);
-            this.count += print(spirteNum, item);
+            print(spirteNum, item);
         }
         if (batterryNum > 0) {
             Item item = this.batterryList.get(0);
-            this.count += print(batterryNum, item);
+            print(batterryNum, item);
         }
 
         int freeCola = colaNum / 3;
@@ -169,6 +185,29 @@ public class Cart {
         System.out.println("**********************");
 
         return this.reduce;
+    }
+
+    /**
+     * 计算总价
+     * @param size
+     * @param item
+     * @return
+     */
+    public Double count(int size, Item item) {
+        Double price = item.getPrice();
+        Double discount = item.getDiscount();
+        boolean promotion = item.getPromotion();
+        Double vipDiscount = item.getVipDiscount();
+        int couple = size / 2;
+        Double count = 0.00;
+
+        if (promotion) {
+            count = (size - couple) * price;
+            return count;
+        } else {
+            count = size * price * discount * vipDiscount;
+            return count;
+        }
     }
 
     /**
