@@ -35,7 +35,7 @@ public class MySQLTableTest {
             count = rs.getInt(1);
         }
         rs.close();
-        assertEquals(6, count);
+        assertEquals(7, count);
 
         sql = "select count(*) from information_schema.`COLUMNS` "
                 + "where TABLE_SCHEMA = 'pos' and TABLE_NAME = 'logs';";
@@ -45,7 +45,17 @@ public class MySQLTableTest {
             count = rs.getInt(1);
         }
         rs.close();
+        assertEquals(8, count);
+
+        sql = "select count(*) from information_schema.`COLUMNS` "
+                + "where TABLE_SCHEMA = 'pos' and TABLE_NAME = 'users';";
+        rs = smt.executeQuery(sql);
+        while(rs.next())
+        {
+            count = rs.getInt(1);
+        }
+        rs.close();
         conn.close();
-        assertEquals(10, count);
+        assertEquals(4, count);
     }
 }
