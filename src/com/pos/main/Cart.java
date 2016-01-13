@@ -18,6 +18,7 @@ public class Cart {
     private List<Item> spirteList = new ArrayList<>();
     private List<Item> batterryList = new ArrayList<>();
 
+    private String user = "";
     private Double count;
     private Double reduce;
     private String list = "";
@@ -44,7 +45,12 @@ public class Cart {
 
         this.readIndex();
 
-        JSONArray items = JSONArray.fromObject(result);
+        JSONObject obj = JSONObject.fromObject(result);
+        Iterator iterator = obj.keys();
+        String key = "";
+
+        this.user = obj.getString("user");
+        JSONArray items = JSONArray.fromObject(obj.getString("items"));
 
         for (int i = 0; i < items.size(); i++) {
 
@@ -70,6 +76,7 @@ public class Cart {
         Double price = 0.00;
         Double discount = 1.0;
         boolean promotion = false;
+        Double vipDiscount = 1.0;
 
         JSONObject objs = JSONObject.fromObject(this.list);
         Iterator iterator = objs.keys();
@@ -83,9 +90,25 @@ public class Cart {
             name = obj.getString("name");
             unit = obj.getString("unit");
             price = obj.getDouble("price");
-            discount = obj.getDouble("discount");
-            promotion = obj.getBoolean("promotion");
-            Item item = new Item(name, unit, price, discount, promotion);
+            try {
+                discount = obj.getDouble("discount");
+            } catch (net.sf.json.JSONException e) {
+                discount = 1.0;
+            }
+
+            try {
+                promotion = obj.getBoolean("promotion");
+            } catch (net.sf.json.JSONException e) {
+                promotion = false;
+            }
+
+            try {
+                vipDiscount = obj.getDouble("vipDiscount");
+            } catch (net.sf.json.JSONException e) {
+                vipDiscount = 1.0;
+            }
+
+            Item item = new Item(name, unit, price, discount, promotion, vipDiscount);
 
             this.indexList.put(key, item);
         }
@@ -118,20 +141,26 @@ public class Cart {
             Item item = this.batterryList.get(0);
             this.count += print(batterryNum, item);
         }
-        System.out.println("----------------------");
-        System.out.println("挥泪赠送商品：");
 
-        if (colaNum / 2 > 0) {
-            Item item = this.colaList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (colaNum / 2) + item.getUnit());
-        }
-        if (spirteNum / 2 > 0) {
-            Item item = this.spirteList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (spirteNum / 2) + item.getUnit());
-        }
-        if (batterryNum / 2 > 0) {
-            Item item = this.batterryList.get(0);
-            System.out.println("名称：可口可乐，数量：" + (batterryNum / 2) + item.getUnit());
+        int freeCola = colaNum / 3;
+        int freeSpirte = spirteNum / 3;
+        int freeBatterry = batterryNum / 3;
+        if (freeCola > 0 || freeSpirte > 0 || freeBatterry > 0) {
+            System.out.println("----------------------");
+            System.out.println("挥泪赠送商品：");
+
+            if (freeCola > 0) {
+                Item item = this.colaList.get(0);
+                System.out.println("名称：可口可乐，数量：" + freeCola + item.getUnit());
+            }
+            if (freeSpirte > 0) {
+                Item item = this.spirteList.get(0);
+                System.out.println("名称：雪碧，数量：" + freeSpirte + item.getUnit());
+            }
+            if (freeBatterry > 0) {
+                Item item = this.batterryList.get(0);
+                System.out.println("名称：电池，数量：" + freeBatterry + item.getUnit());
+            }
         }
 
         System.out.println("----------------------");
@@ -154,6 +183,7 @@ public class Cart {
         Double price = item.getPrice();
         Double discount = item.getDiscount();
         boolean promotion = item.getPromotion();
+        Double vipDiscount = item.getVipDiscount();
         int couple = size / 2;
         Double count = 0.00;
 
@@ -168,8 +198,8 @@ public class Cart {
             System.out.println(result);
             return count;
         } else {
-            count = size * price * discount;
-            this.reduce += size * price * (1 - discount);
+            count = size * price * discount * vipDiscount;
+            this.reduce += size * price * (1 - discount * vipDiscount);
             result = "名称：" + name
                     + "，数量：" + size + unit  + "，单价：" + Item.df.format(price)
                     + "(元)，小计：" + Item.df.format(count) + "(元)";
