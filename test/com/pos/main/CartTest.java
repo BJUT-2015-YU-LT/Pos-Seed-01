@@ -30,7 +30,7 @@ public class CartTest {
      */
     @Test
     public void testPrintAll() throws Exception {
-        Double result = 3.00;
+        Double result = 7.26;
         assertEquals(result, this.cart.printAll());
     }
 
