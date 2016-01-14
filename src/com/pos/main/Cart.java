@@ -70,11 +70,74 @@ public class Cart {
         this.batterry = MySQLOperate.queryDataBase(this.batterryBar);
     }
 
+    public boolean showList() {
+        Scanner input=new Scanner(System.in);
+
+        while (true) {
+            System.out.println("***商品清单***");
+            if (this.colaNum > 0) {
+                System.out.println("名称：" + this.cola.getName()
+                        + "，数量：" + this.colaNum + this.cola.getUnit()
+                        + "，单价：" + this.cola.getPrice() + "(元)");
+            }
+            if (this.spirteNum > 0) {
+                System.out.println("名称：" + this.spirte.getName()
+                        + "，数量：" + this.spirteNum + this.spirte.getUnit()
+                        + "，单价：" + this.spirte.getPrice() + "(元)");
+            }
+            if (this.batterryNum > 0) {
+                System.out.println("名称：" + this.batterry.getName()
+                        + "，数量：" + this.batterryNum + this.batterry.getUnit()
+                        + "，单价：" + this.batterry.getPrice() + "(元)");
+            }
+            System.out.println("1.结算    2.退货");
+            System.out.print("请选择:");
+
+            int choice = input.nextInt();
+
+            if (choice == 1) return true;
+
+            int index = 0;
+            if (choice == 2) {
+                if (this.colaNum > 0) {
+                    index++;
+                    System.out.print(index + ".可口可乐    ");
+                }
+                if (this.spirteNum > 0) {
+                    index++;
+                    System.out.print(index + ".雪碧    ");
+                }
+                if (this.batterryNum > 0) {
+                    index++;
+                    System.out.print(index + ".电池    ");
+                }
+                System.out.print("\n请选择商品:");
+            }
+
+            int cancle = input.nextInt();
+
+            if (cancle == 1) {
+                if (this.colaNum > 0) this.colaNum--;
+                if (this.colaNum == 0 && this.spirteNum > 0) this.spirteNum--;
+                if (this.colaNum == 0 && this.spirteNum == 0 && this.batterryNum > 0) this.batterryNum--;
+            }
+            if (cancle == 2) {
+                if (this.spirteNum > 0) this.spirteNum--;
+                if (this.spirteNum == 0 && this.batterryNum > 0) this.batterryNum--;
+            }
+            if (cancle == 3) {
+                if (this.batterryNum > 0) this.batterryNum--;
+            }
+        }
+    }
+
     /**
      * 打印各类商品总价
      * @return
      */
     public boolean printAll() {
+
+        this.showList();
 
         if (colaNum > 0) {
             this.count += this.count(this.colaNum, this.cola);
