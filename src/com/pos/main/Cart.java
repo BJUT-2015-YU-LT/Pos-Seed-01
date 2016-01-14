@@ -118,12 +118,12 @@ public class Cart {
 
             if (cancle == 1) {
                 if (this.colaNum > 0) this.colaNum--;
-                if (this.colaNum == 0 && this.spirteNum > 0) this.spirteNum--;
-                if (this.colaNum == 0 && this.spirteNum == 0 && this.batterryNum > 0) this.batterryNum--;
+                else if (this.colaNum == 0 && this.spirteNum > 0) this.spirteNum--;
+                else if (this.colaNum == 0 && this.spirteNum == 0 && this.batterryNum > 0) this.batterryNum--;
             }
             if (cancle == 2) {
                 if (this.spirteNum > 0) this.spirteNum--;
-                if (this.spirteNum == 0 && this.batterryNum > 0) this.batterryNum--;
+                else if (this.spirteNum == 0 && this.batterryNum > 0) this.batterryNum--;
             }
             if (cancle == 3) {
                 if (this.batterryNum > 0) this.batterryNum--;

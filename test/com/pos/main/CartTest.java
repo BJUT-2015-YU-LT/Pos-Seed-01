@@ -24,15 +24,6 @@ public class CartTest {
     }
 
     /**
-     * 测试所有商品节省的价钱
-     * @throws Exception
-     */
-    @Test
-    public void testPrintAll() throws Exception {
-        assertEquals(true, this.cart.printAll());
-    }
-
-    /**
      * 测试打印和计算某个商品的总价
      * @throws Exception
      */
